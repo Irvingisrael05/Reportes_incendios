@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PersonasModel extends Model
+class PersonModel extends Model
 {
 
     protected $table = 'persons';
@@ -14,11 +14,11 @@ class PersonasModel extends Model
     public $timestamps = false;
 
     protected $fillable = [
-
         'first_name',
         'last_name',
         'middle_name',
-        'phone'
+        'phone',
+        'email'
 
     ];
 

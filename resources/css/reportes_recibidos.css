@@ -1,0 +1,80 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+}
+
+.contenedor{
+    width:90%;
+    margin:auto;
+    padding-top:40px;
+}
+
+.titulo{
+    color:#1b5e20;
+    margin-bottom:30px;
+}
+
+.subtitulo{
+    margin-top:40px;
+    color:#2e7d32;
+}
+
+.tabla{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.tabla th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+    text-align:left;
+}
+
+.tabla td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+.tabla tr:hover{
+    background:#f2f2f2;
+}
+
+.estado{
+    padding:5px 10px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.recibido{
+    background:#ffc107;
+    color:#333;
+}
+
+.proceso{
+    background:#ff9800;
+    color:white;
+}
+
+.finalizado{
+    background:#4caf50;
+    color:white;
+}
+
+.btn-regresar{
+    display:inline-block;
+    margin-bottom:20px;
+    background:#555;
+    color:white;
+    padding:10px 15px;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.btn-regresar:hover{
+    background:#333;
+}

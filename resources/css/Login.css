@@ -1,0 +1,83 @@
+/* ============================= */
+/* FONDO GENERAL */
+/* ============================= */
+
+body{
+    background-image: url('../../public/img/bosque.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* capa oscura */
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    z-index:-1;
+}
+
+
+/* ============================= */
+/* TARJETA LOGIN */
+/* ============================= */
+
+.login-card{
+    background:#F1F8F4;
+    border-radius:20px;
+    max-width:420px;
+    width:100%;
+}
+
+
+/* ============================= */
+/* LOGO */
+/* ============================= */
+
+.logo-login{
+    max-width:90px;
+    border:4px solid #2E7D32;
+}
+
+
+/* ============================= */
+/* BOTON LOGIN */
+/* ============================= */
+
+.btn-login{
+    background:#2E7D32;
+    border:none;
+    color:white;
+    font-weight:600;
+    padding:10px;
+    border-radius:10px;
+}
+
+.btn-login:hover{
+    background:#1B5E20;
+}
+
+
+/* LINKS */
+
+.link-login{
+    color:#2E7D32;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.link-login:hover{
+    text-decoration:underline;
+}

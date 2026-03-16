@@ -1,0 +1,110 @@
+h3{
+
+    color:#1B5E20;
+    letter-spacing:1px;
+
+}
+
+.table-container{
+
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+table{
+
+    border-radius:10px;
+    overflow:hidden;
+
+}
+
+thead{
+
+    background:#2E7D32;
+    color:white;
+
+}
+
+thead th{
+
+    padding:12px;
+    font-weight:bold;
+
+}
+
+tbody tr{
+
+    transition:all .2s ease;
+
+}
+
+tbody tr:hover{
+
+    background:#f2f7f3;
+
+}
+
+.badge{
+
+    font-size:14px;
+    padding:8px 12px;
+
+}
+
+.btn-info{
+
+    background:#0288D1;
+    border:none;
+
+}
+
+.btn-info:hover{
+
+    background:#01579B;
+
+}
+
+.details-box{
+
+    background:#f5f7f6;
+    padding:20px;
+    border-radius:10px;
+
+}
+
+.details-box ul{
+
+    margin:0;
+    padding-left:20px;
+
+}
+
+.details-box li{
+
+    margin-bottom:6px;
+
+}
+.titulo-reportes{
+
+    text-align:center;
+    font-size:34px;
+    font-weight:bold;
+
+    color:white;
+
+    background:linear-gradient(90deg,#1B5E20,#2E7D32,#1B5E20);
+
+    padding:15px;
+
+    border-radius:12px;
+
+    margin-bottom:30px;
+
+    letter-spacing:2px;
+
+    box-shadow:0 6px 15px rgba(0,0,0,0.25);
+
+}

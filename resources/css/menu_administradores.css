@@ -1,0 +1,124 @@
+/* FONDO GENERAL */
+
+body{
+
+    background:
+        linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.35)),
+        url('../../public/img/bosque.jpg');
+
+    background-size:cover;
+    background-attachment:fixed;
+    background-position:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+
+/* SIDEBAR */
+
+.sidebar-custom{
+
+    background:linear-gradient(180deg,#1B5E20,#2E7D32);
+    box-shadow:4px 0 12px rgba(0,0,0,0.2);
+
+}
+
+
+
+/* TARJETA DE USUARIO */
+
+.user-info{
+
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    border-radius:12px;
+    backdrop-filter:blur(4px);
+
+}
+
+
+
+/* BOTONES SIDEBAR */
+
+.sidebar-custom .btn{
+
+    transition:all .3s ease;
+
+}
+
+.sidebar-custom .btn:hover{
+
+    transform:translateX(5px);
+    box-shadow:0 5px 10px rgba(0,0,0,0.2);
+
+}
+
+
+
+/* CONTENIDO DEL PANEL */
+
+.panel-contenido{
+
+    background:white;
+    padding:30px;
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+    min-height:500px;
+
+}
+
+
+
+/* TITULOS */
+
+.titulo-reportes{
+
+    font-weight:bold;
+    color:#1B5E20;
+    margin-bottom:25px;
+
+}
+
+
+
+/* TABLAS */
+
+.table{
+
+    background:white;
+
+}
+
+
+
+/* TABS */
+
+.nav-tabs .nav-link{
+
+    font-weight:bold;
+    color:#1B5E20;
+
+}
+
+.nav-tabs .nav-link.active{
+
+    background:#2E7D32;
+    color:white;
+    border:none;
+
+}
+
+
+
+/* BADGES */
+
+.badge{
+
+    font-size:14px;
+    padding:8px 12px;
+
+}

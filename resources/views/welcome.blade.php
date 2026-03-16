@@ -5,39 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Reportes de Incendios Forestales</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/css/Welcome.css', 'resources/js/app.js'])
 
-    <style>
-        :root {
-            --primary-dark: #1B4332;
-            --primary: #2D6A4F;
-            --primary-light: #40916C;
-            --background-soft: #F1FAF5;
-        }
 
-        body {
-            background-color: var(--background-soft);
-        }
-
-        .navbar-custom {
-            background-color: var(--primary-dark);
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white;
-            padding: 120px 0;
-        }
-
-        .section-title {
-            color: var(--primary-dark);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            transition: 0.3s ease;
-        }
-    </style>
 </head>
 
 <body>
@@ -55,12 +25,10 @@
         </a>
 
         <div class="ms-auto d-flex">
-            <!-- BOTÓN LOGIN -->
             <a href="/Login" class="btn btn-outline-light me-2">
                 Iniciar sesión
             </a>
 
-            <!-- BOTÓN REGISTRO -->
             <a href="/Registro" class="btn btn-light text-dark">
                 Registrarse
             </a>
@@ -72,6 +40,7 @@
 <!-- HERO -->
 <section class="hero-section text-center">
     <div class="container">
+
         <h1 class="display-4 fw-bold">
             Protección Activa de Nuestros Ecosistemas
         </h1>
@@ -82,14 +51,9 @@
             reduciendo riesgos ambientales y protegiendo nuestro patrimonio natural.
         </p>
 
-        <!-- BOTONES HERO -->
         <div class="mt-4">
-            <a href="/Login" class="btn btn-light btn-lg me-2">
-                Iniciar Sesión
-            </a>
-
-            <a href="/Registro" class="btn btn-outline-light btn-lg">
-                Crear Cuenta
+            <a href="/Login" class="btn btn-light btn-lg px-5 fw-semibold">
+                Realizar Reporte
             </a>
         </div>
 
@@ -99,10 +63,14 @@
 <!-- SOBRE NOSOTROS -->
 <section class="py-5">
     <div class="container text-center">
-        <h2 class="section-title mb-4 fw-bold">Comprometidos con la Prevención</h2>
+
+        <h2 class="section-title mb-4 fw-bold">
+            Comprometidos con la Prevención
+        </h2>
 
         <div class="row justify-content-center">
             <div class="col-md-9">
+
                 <p class="fs-5 text-muted">
                     Este sistema fue desarrollado con la finalidad de fortalecer la prevención,
                     detección temprana y contención estratégica de incendios forestales.
@@ -115,15 +83,20 @@
                     información estructurada en tiempo oportuno, facilitando la toma de decisiones
                     rápidas y coordinadas por parte de las autoridades responsables.
                 </p>
+
             </div>
         </div>
+
     </div>
 </section>
 
 <!-- FUNCIONALIDADES -->
 <section class="py-5 bg-white">
     <div class="container text-center">
-        <h2 class="section-title mb-5 fw-bold">Acciones Clave del Sistema</h2>
+
+        <h2 class="section-title mb-5 fw-bold">
+            Acciones Clave del Sistema
+        </h2>
 
         <div class="row">
 
@@ -164,11 +137,12 @@
             </div>
 
         </div>
+
     </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="text-center py-4" style="background-color: var(--primary-dark); color:white;">
+<footer class="text-center py-4 footer-custom">
     <div class="container">
         <small>© {{ date('Y') }} Sistema de Monitoreo y Prevención de Incendios Forestales</small>
     </div>

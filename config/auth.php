@@ -58,7 +58,7 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+/*  ESTO ES LA PRINCIPAL QUE MANEJA LARAVEL CON SU CONTROLLADOR QUE VINE POR DEFECTO EN LARAVEL
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
@@ -70,7 +70,13 @@ return [
         //     'table' => 'users',
         // ],
     ],
-
+*/
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserModel::class,
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords

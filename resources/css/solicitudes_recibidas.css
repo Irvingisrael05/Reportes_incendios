@@ -1,0 +1,61 @@
+/* TITULO */
+
+h3{
+    border-left:6px solid #2E7D32;
+    padding-left:12px;
+}
+
+
+/* TABLA */
+
+.table{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+
+/* ENCABEZADO */
+
+.encabezado-tabla{
+    background:#43A047;
+    color:white;
+    text-align:center;
+}
+
+.encabezado-tabla th{
+    vertical-align:middle;
+    font-weight:600;
+}
+
+
+/* FILAS */
+
+.table td{
+    vertical-align:middle;
+}
+
+
+/* ACCIONES */
+
+.acciones{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+}
+
+
+/* BOTONES */
+
+.btn-success{
+    background:#2E7D32;
+    border:none;
+}
+
+.btn-success:hover{
+    background:#1B5E20;
+}
+
+.btn-danger:hover{
+    background:#B71C1C;
+}

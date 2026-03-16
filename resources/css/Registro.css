@@ -1,0 +1,190 @@
+/* ============================= */
+/* FONDO GENERAL DEL SISTEMA */
+/* ============================= */
+
+body{
+    background-image: url('../../public/img/bosque.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+    padding:40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Capa oscura encima del bosque */
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    z-index:-1;
+}
+
+
+/* ============================= */
+/* TARJETA DEL FORMULARIO */
+/* ============================= */
+
+.card-custom{
+    background:#F1F8F4;
+    border-radius:20px;
+    max-width:950px;
+    width:100%;
+    backdrop-filter: blur(6px);
+}
+
+
+/* ============================= */
+/* LOGO */
+/* ============================= */
+
+.logo-style{
+    max-width:110px;
+    border:4px solid #2E7D32;
+}
+
+
+/* ============================= */
+/* TITULOS */
+/* ============================= */
+
+.title-main{
+    color:#1B5E20;
+    font-weight:700;
+}
+
+.section-title{
+    color:#1B5E20;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+
+/* ============================= */
+/* INPUTS */
+/* ============================= */
+
+.form-control{
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.form-control:focus{
+    border-color:#2E7D32;
+    box-shadow:0 0 0 0.2rem rgba(46,125,50,.25);
+}
+
+
+/* ============================= */
+/* SECCION DE CAJAS */
+/* ============================= */
+
+.section-box{
+    background:#E8F5E9;
+    border-left:6px solid #2E7D32;
+}
+
+
+/* ============================= */
+/* BOTON REGISTRO */
+/* ============================= */
+
+.btn-register{
+    background:#2E7D32;
+    color:white;
+    border:none;
+    padding:10px 40px;
+    border-radius:10px;
+    transition:0.3s;
+    font-weight:600;
+}
+
+.btn-register:hover{
+    background:#1B5E20;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+/* ============================= */
+/* BOTON VOLVER */
+/* ============================= */
+
+.btn-back{
+    background:rgba(255,255,255,0.25);
+    color:white;
+    padding:10px 30px;
+    border-radius:10px;
+    border:1px solid white;
+    transition:0.3s;
+}
+
+.btn-back:hover{
+    background:white;
+    color:#1B5E20;
+}
+
+
+/* ============================= */
+/* ALERTAS */
+/* ============================= */
+
+.alert{
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-weight:500;
+}
+
+.alert-success{
+    background:#d4edda;
+    color:#155724;
+    border:1px solid #c3e6cb;
+}
+
+.alert-danger{
+    background:#f8d7da;
+    color:#721c24;
+    border:1px solid #f5c6cb;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width:768px){
+
+    body{
+        padding:20px;
+    }
+
+    .card-custom{
+        padding:10px;
+    }
+
+}
+.btn-back{
+    background:#ffffff;
+    color:#1B5E20;
+    padding:10px 30px;
+    border-radius:10px;
+    border:1px solid #1B5E20;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn-back:hover{
+    background:#1B5E20;
+    color:white;
+}

@@ -1,0 +1,102 @@
+/* ============================
+   TITULO
+============================ */
+
+.titulo-asignaciones{
+    font-weight: bold;
+    color: #1B5E20;
+    margin-bottom: 30px;
+}
+
+
+
+/* ============================
+   TABLAS
+============================ */
+
+.table{
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead{
+    font-weight: bold;
+}
+
+.table th{
+    text-align: center;
+}
+
+.table td{
+    vertical-align: middle;
+}
+
+
+
+/* ============================
+   ENCABEZADO REPORTES
+============================ */
+
+thead.bg-warning{
+    background-color: #FFC107 !important;
+}
+
+
+
+/* ============================
+   ENCABEZADO ASIGNACIONES
+============================ */
+
+thead.bg-info{
+    background-color: #0288D1 !important;
+    color: white;
+}
+
+
+
+/* ============================
+   SELECT AUTORIDAD
+============================ */
+
+.form-select{
+    border-radius: 8px;
+}
+
+
+
+/* ============================
+   BOTON ASIGNAR
+============================ */
+
+.btn-asignar{
+    width: 100%;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #2E7D32;
+    border: none;
+}
+
+.btn-asignar:hover{
+    background-color: #1B5E20;
+}
+
+
+
+/* ============================
+   BOTON ELIMINAR
+============================ */
+
+.btn-eliminar{
+    border-radius: 8px;
+}
+
+
+
+/* ============================
+   CONTENEDOR GENERAL
+============================ */
+
+.contenedor-asignaciones{
+    padding: 20px;
+}
