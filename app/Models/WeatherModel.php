@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Auditable;
 
 class WeatherModel extends Model
 {
+    use Auditable;
+    
     protected $table = 'weather_conditions';
     protected $primaryKey = 'id_weather';
     public $timestamps = false;

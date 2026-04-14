@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Traits\Auditable;
 class EvidenceModel extends Model
 {
+    use Auditable;
 
     protected $table = 'evidences';
 

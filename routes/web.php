@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/admin/usuarios/{id}', [AdminUserController::class, 'destroy'])
         ->name('admin.usuarios.destroy');
+
+    Route::get('/admin/audit', [App\Http\Controllers\AdminAuditController::class, 'index'])->name('admin.audit');
 });
 
 

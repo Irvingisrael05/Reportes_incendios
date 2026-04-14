@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Auditable;
 
 class ReportModel extends Model
 {
+    use Auditable;
+    
     protected $table = 'reports';
     protected $primaryKey = 'id_report';
     public $timestamps = false;
@@ -21,28 +24,11 @@ class ReportModel extends Model
         'description'
     ];
 
-    // Relación con Ecosystem
-    public function ecosystem()
-    {
-        return $this->belongsTo(EcosystemModel::class, 'ecosystem_id', 'id_ecosystem');
-    }
+    public function status() { return $this->belongsTo(ReportStatusModel::class, 'status_id', 'id_status'); }
+    public function ecosystem() { return $this->belongsTo(EcosystemModel::class, 'ecosystem_id', 'id_ecosystem'); }
+    public function weather() { return $this->belongsTo(WeatherModel::class, 'weather_id', 'id_weather'); }
+    public function evidences() { return $this->hasMany(EvidenceModel::class, 'report_id', 'id_report'); }
+    public function assignments() { return $this->hasMany(AssignmentModel::class, 'report_id', 'id_report'); }
 
-    // Relación con Category (opcional, si se requiere)
-    public function category()
-    {
-        return $this->belongsTo(CategoryModel::class, 'category_id', 'id_category');
-    }
-
-    // Relación con Status
-    public function status()
-    {
-        return $this->belongsTo(ReportStatusModel::class, 'status_id', 'id_status');
-    }
-
-    // Relación con User
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id_user');
-    }
 
 }

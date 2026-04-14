@@ -76,6 +76,10 @@
                    class="btn rounded-3 text-white">
                     Usuarios Registrados
                 </a>
+                <a href="{{ route('admin.audit')}}"
+                   class="btn rounded-3 text-white">
+                   Auditoria
+                </a>
 
             </div>
 

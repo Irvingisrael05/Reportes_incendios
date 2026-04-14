@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PersonModel;
-use App\Models\UserModel;
+use App\Models\User;  // ← cambiado
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-
     public function create()
     {
         return view('Registro');
@@ -17,7 +16,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -35,8 +33,8 @@ class RegisterController extends Controller
             'email' => $request->email
         ]);
 
-        // Crear usuario
-        $user = UserModel::create([
+        // Crear usuario con Eloquent (User, no UserModel)
+        $user = User::create([
             'person_id' => $person->id_person,
             'username' => $request->username,
             'password' => Hash::make($request->password),
@@ -44,8 +42,6 @@ class RegisterController extends Controller
             'status' => 'active'
         ]);
 
-        return redirect()->back()->with('success','Usuario registrado correctamente');
-
+        return redirect()->back()->with('success', 'Usuario registrado correctamente');
     }
-
 }

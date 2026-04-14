@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Auditable;
 
 class AuthorityRequestModel extends Model
 {
+    use Auditable;
 
     protected $table = 'authority_requests';
 
@@ -22,5 +24,6 @@ class AuthorityRequestModel extends Model
         'company_location'
 
     ];
+    public function user() { return $this->belongsTo(User::class, 'user_id', 'id_user'); }
 
 }

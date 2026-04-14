@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Auditable;
 
 class AssignmentModel extends Model
 {
+    use Auditable;
+    
     protected $table = 'assignments';
     protected $primaryKey = 'id_assignment';
     public $timestamps = false;
@@ -27,4 +30,7 @@ class AssignmentModel extends Model
     {
         return $this->belongsTo(User::class, 'authority_id', 'id_user');
     }
+    
+
+    
 }
