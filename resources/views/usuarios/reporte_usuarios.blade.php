@@ -3,7 +3,7 @@
 
 @section('contenido')
 
-    @vite(['resources/css/Reporte_Usuarios.css'])
+    @vite(['resources/css/reporte_usuarios.css'])
 
     <h2 class="titulo-reportes">
         Mis Reportes de Incendio
@@ -19,7 +19,7 @@
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Ecosistema</th>
-                <th>Descripción</th>
+                <th>Descripcion</th>
                 <th>Estado</th>
                 <th>Detalles</th>
             </tr>
@@ -36,41 +36,110 @@
                     <td>
                         @if($report->status->description == 'En proceso')
                             <span class="badge bg-warning text-dark">
-                                    {{ $report->status->description }}
-                                </span>
+                                {{ $report->status->description }}
+                            </span>
                         @elseif($report->status->description == 'Atendido')
                             <span class="badge bg-success">
-                                    {{ $report->status->description }}
-                                </span>
+                                {{ $report->status->description }}
+                            </span>
                         @else
                             <span class="badge bg-danger">
-                                    {{ $report->status->description }}
-                                </span>
+                                {{ $report->status->description }}
+                            </span>
                         @endif
                     </td>
                     <td>
                         <button class="btn btn-info btn-sm"
-                                onclick="toggleDetails('detalle{{ $report->id_report }}')">
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#detalleReporte{{ $report->id_report }}">
                             Ver Detalles
                         </button>
                     </td>
                 </tr>
 
-                <!-- Fila de detalles expandibles -->
-                <tr id="detalle{{ $report->id_report }}" class="collapse">
-                    <td colspan="7">
-                        <div class="details-box p-3 bg-light rounded">
-                            <h5>Detalles del Reporte</h5>
-                            <ul>
-                                <li><strong>Fecha:</strong> {{ $report->report_date }}</li>
-                                <li><strong>Latitud:</strong> {{ $report->latitude }}</li>
-                                <li><strong>Longitud:</strong> {{ $report->longitude }}</li>
-                                <li><strong>Descripción:</strong> {{ $report->description }}</li>
-                                <li><strong>Estado:</strong> {{ $report->status->description }}</li>
-                            </ul>
+                <!-- MODAL DETALLES DEL REPORTE -->
+                <div class="modal fade" id="detalleReporte{{ $report->id_report }}" tabindex="-1" aria-labelledby="detalleReporteLabel{{ $report->id_report }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content border-0 shadow-lg rounded-4">
+
+                            <div class="modal-header bg-info text-white rounded-top-4">
+                                <h5 class="modal-title" id="detalleReporteLabel{{ $report->id_report }}">
+                                    Detalles del Reporte
+                                </h5>
+
+                                <button type="button"
+                                        class="btn-close btn-close-white"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Cerrar">
+                                </button>
+                            </div>
+
+                            <div class="modal-body p-4">
+
+                                <div class="row g-3">
+
+                                    <div class="col-md-6">
+                                        <strong>Fecha:</strong>
+                                        <p>{{ $report->report_date }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Ecosistema:</strong>
+                                        <p>{{ $report->ecosystem->description ?? 'N/A' }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Latitud:</strong>
+                                        <p>{{ $report->latitude }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Longitud:</strong>
+                                        <p>{{ $report->longitude }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Estado:</strong><br>
+
+                                        @if($report->status->description == 'En proceso')
+                                            <span class="badge bg-warning text-dark">
+                                                {{ $report->status->description }}
+                                            </span>
+                                        @elseif($report->status->description == 'Atendido')
+                                            <span class="badge bg-success">
+                                                {{ $report->status->description }}
+                                            </span>
+                                        @else
+                                            <span class="badge bg-danger">
+                                                {{ $report->status->description }}
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12">
+                                        <strong>Descripcion:</strong>
+                                        <p class="mt-2">
+                                            {{ $report->description }}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer border-0">
+                                <button type="button"
+                                        class="btn btn-secondary rounded-pill px-4"
+                                        data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+
                         </div>
-                    </td>
-                </tr>
+                    </div>
+                </div>
+
             @empty
                 <tr>
                     <td colspan="7" class="text-center">
@@ -83,12 +152,5 @@
         </table>
 
     </div>
-
-    <script>
-        function toggleDetails(id) {
-            const row = document.getElementById(id);
-            row.classList.toggle('collapse');
-        }
-    </script>
 
 @endsection

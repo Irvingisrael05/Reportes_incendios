@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión | Incendios Forestales</title>
+    <title>Iniciar Sesion | Incendios Forestales</title>
 
-    @vite(['resources/css/app.css','resources/css/Login.css','resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/css/login.css','resources/js/app.js'])
 </head>
 
 <body>
@@ -20,7 +20,7 @@
             <img src="{{ asset('img/logo.jpeg') }}"
                  class="logo-login mb-3 rounded-circle shadow">
 
-            <h3 class="fw-bold text-success">Iniciar Sesión</h3>
+            <h3 class="fw-bold text-success">Iniciar Sesion</h3>
 
             <p class="text-muted">
                 Sistema de Reportes de Incendios Forestales
@@ -28,16 +28,8 @@
 
         </div>
 
-        <!-- FORMULARIO CORRECTO -->
         <form method="POST" action="{{ route('login.procesar') }}">
             @csrf
-
-            <!-- Mostrar errores -->
-            @if($errors->any())
-                <div class="alert alert-danger text-center">
-                    {{ $errors->first() }}
-                </div>
-            @endif
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Usuario</label>
@@ -45,7 +37,7 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold">Contraseña</label>
+                <label class="form-label fw-semibold">Contrasena</label>
                 <input type="password" name="password" class="form-control shadow-sm" required>
             </div>
 
@@ -69,6 +61,52 @@
     </div>
 
 </div>
+
+@if($errors->any())
+    <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+
+                <div class="modal-header bg-danger text-white rounded-top-4">
+                    <h5 class="modal-title" id="loginErrorModalLabel">
+                        Acceso no permitido
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                        <span style="font-size: 48px;">⚠️</span>
+                    </div>
+
+                    <h5 class="fw-bold mb-2">No pudimos iniciar sesion</h5>
+
+                    <p class="text-muted mb-0">
+                        {{ $errors->first() }}
+                    </p>
+                </div>
+
+                <div class="modal-footer justify-content-center border-0 pb-4">
+                    <button type="button" class="btn btn-danger px-4 rounded-pill" data-bs-dismiss="modal">
+                        Intentar de nuevo
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            loginErrorModal.show();
+        });
+    </script>
+@endif
 
 </body>
 </html>

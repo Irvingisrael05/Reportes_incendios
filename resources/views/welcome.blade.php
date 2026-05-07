@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Reportes de Incendios Forestales</title>
 
-    @vite(['resources/css/app.css','resources/css/Welcome.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/css/welcome.css', 'resources/js/app.js'])
 
 
 </head>

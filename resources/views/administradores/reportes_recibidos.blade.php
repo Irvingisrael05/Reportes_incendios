@@ -8,22 +8,6 @@
         Gestion de Reportes de Incendio
     </h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <ul class="nav nav-tabs mb-4" id="tabsReportes" role="tablist">
 
         <li class="nav-item" role="presentation">
@@ -140,30 +124,56 @@
                                 </svg>
                             </button>
 
+                            <!-- MODAL ASIGNAR AUTORIDAD -->
                             <div class="modal fade"
                                  id="modalAsignar{{ $reporte->id_report }}"
                                  tabindex="-1"
                                  aria-labelledby="modalAsignarLabel{{ $reporte->id_report }}"
                                  aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content border-0 shadow-lg rounded-4">
+
                                         <form action="{{ route('admin.reportes.asignar_proceso', $reporte->id_report) }}" method="POST">
                                             @csrf
 
-                                            <div class="modal-header">
+                                            <div class="modal-header bg-primary text-white rounded-top-4">
                                                 <h5 class="modal-title" id="modalAsignarLabel{{ $reporte->id_report }}">
                                                     Seleccionar autoridad
                                                 </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+
+                                                <button type="button"
+                                                        class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Cerrar">
+                                                </button>
                                             </div>
 
-                                            <div class="modal-body">
-                                                <p><strong>Reporte:</strong> {{ $reporte->description }}</p>
+                                            <div class="modal-body p-4">
+
+                                                <div class="text-center mb-3" style="font-size: 48px;">
+                                                    🛡️
+                                                </div>
+
+                                                <h5 class="fw-bold text-center mb-3">
+                                                    Asignar reporte
+                                                </h5>
+
+                                                <p class="text-muted text-center">
+                                                    Selecciona la autoridad que dara seguimiento a este reporte.
+                                                </p>
 
                                                 <div class="mb-3">
-                                                    <label for="authority_id_{{ $reporte->id_report }}" class="form-label">
+                                                    <strong>Reporte:</strong>
+                                                    <p class="mt-2">
+                                                        {{ $reporte->description }}
+                                                    </p>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="authority_id_{{ $reporte->id_report }}" class="form-label fw-semibold">
                                                         Autoridad
                                                     </label>
+
                                                     <select name="authority_id"
                                                             id="authority_id_{{ $reporte->id_report }}"
                                                             class="form-select"
@@ -183,15 +193,20 @@
                                                 </div>
                                             </div>
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            <div class="modal-footer justify-content-center border-0 pb-4">
+                                                <button type="button"
+                                                        class="btn btn-secondary rounded-pill px-4"
+                                                        data-bs-dismiss="modal">
                                                     Cancelar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    Aceptar
+
+                                                <button type="submit"
+                                                        class="btn btn-primary rounded-pill px-4">
+                                                    Asignar
                                                 </button>
                                             </div>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -362,5 +377,72 @@
         </div>
 
     </div>
+
+    @if(session('success') || $errors->any())
+        <div class="modal fade" id="respuestaReportesModal" tabindex="-1" aria-labelledby="respuestaReportesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+
+                    <div class="modal-header {{ session('success') ? 'bg-success' : 'bg-danger' }} text-white rounded-top-4">
+                        <h5 class="modal-title" id="respuestaReportesModalLabel">
+                            {{ session('success') ? 'Proceso realizado' : 'Datos incorrectos' }}
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Cerrar">
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center p-4">
+
+                        <div class="mb-3" style="font-size: 48px;">
+                            {{ session('success') ? '✅' : '⚠️' }}
+                        </div>
+
+                        @if(session('success'))
+                            <h5 class="fw-bold mb-2">Operacion exitosa</h5>
+
+                            <p class="text-muted mb-0">
+                                {{ session('success') }}
+                            </p>
+                        @endif
+
+                        @if($errors->any())
+                            <h5 class="fw-bold mb-3">Revisa la informacion</h5>
+
+                            <ul class="text-start mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                    </div>
+
+                    <div class="modal-footer justify-content-center border-0 pb-4">
+                        <button type="button"
+                                class="btn {{ session('success') ? 'btn-success' : 'btn-danger' }} px-4 rounded-pill"
+                                data-bs-dismiss="modal">
+                            Entendido
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const respuestaReportesModal = new bootstrap.Modal(document.getElementById('respuestaReportesModal'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+                respuestaReportesModal.show();
+            });
+        </script>
+    @endif
 
 @endsection

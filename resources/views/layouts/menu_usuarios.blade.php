@@ -8,7 +8,7 @@
 
     @vite([
         'resources/css/app.css',
-        'resources/css/Menu_Usuarios.css',
+        'resources/css/menu_usuarios.css',
         'resources/js/app.js'
     ])
 </head>
@@ -29,7 +29,7 @@
                 <small class="text-light">Sistema de Reporte Forestal</small>
             </div>
 
-            <!-- INFORMACIÓN DEL USUARIO -->
+            <!-- INFORMACION DEL USUARIO -->
             <div class="user-info mt-3 p-3 text-white">
                 <p><strong>Nombre:</strong><br>
                     {{ Auth::user()->person->first_name ?? '' }}
@@ -46,7 +46,7 @@
                 </p>
             </div>
 
-            <!-- MENÚ -->
+            <!-- MENU -->
             <div class="d-grid gap-3">
                 <a href="{{ route('menu') }}" class="btn btn-light text-success fw-semibold rounded-3">
                     Registrar Reporte
@@ -63,21 +63,72 @@
 
             <!-- LOGOUT -->
             <div class="mt-5">
-                <form method="POST" action="{{ route('logout') }}">
+                <button type="button"
+                        class="btn btn-outline-light w-100 rounded-3"
+                        data-bs-toggle="modal"
+                        data-bs-target="#logoutModal">
+                    Cerrar Sesion
+                </button>
+
+                <form id="logoutForm" method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="btn btn-outline-light w-100 rounded-3">
-                        Cerrar Sesión
-                    </button>
                 </form>
             </div>
 
         </div>
 
-        <!-- CONTENIDO DINÁMICO -->
+        <!-- CONTENIDO DINAMICO -->
         <div class="col-md-9 col-lg-10 p-5">
             @yield('contenido')
         </div>
 
+    </div>
+</div>
+
+<!-- MODAL CONFIRMAR CIERRE DE SESION -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+
+            <div class="modal-header bg-danger text-white rounded-top-4">
+                <h5 class="modal-title" id="logoutModalLabel">
+                    Cerrar sesion
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+            </div>
+
+            <div class="modal-body text-center p-4">
+                <div class="mb-3" style="font-size: 48px;">
+                    🚪
+                </div>
+
+                <h5 class="fw-bold mb-2">¿Seguro que deseas salir?</h5>
+
+                <p class="text-muted mb-0">
+                    Tu sesion actual se cerrara y volveras al inicio de sesion.
+                </p>
+            </div>
+
+            <div class="modal-footer justify-content-center border-0 pb-4">
+                <button type="button"
+                        class="btn btn-secondary px-4 rounded-pill"
+                        data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger px-4 rounded-pill"
+                        onclick="document.getElementById('logoutForm').submit();">
+                    Si, cerrar sesion
+                </button>
+            </div>
+
+        </div>
     </div>
 </div>
 

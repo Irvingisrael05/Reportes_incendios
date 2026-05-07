@@ -7,22 +7,6 @@
         Asignar Reportes a Autoridades
     </h3>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <ul class="nav nav-tabs mb-4" id="tabsAsignaciones" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active"
@@ -87,8 +71,11 @@
                             <td>{{ $reporte->description }}</td>
                             <td>{{ $reporte->climatografia }}</td>
                             <td>
-                                <form action="{{ route('admin.asignaciones.store', $reporte->id_report) }}" method="POST">
+                                <form id="formAsignar{{ $reporte->id_report }}"
+                                      action="{{ route('admin.asignaciones.store', $reporte->id_report) }}"
+                                      method="POST">
                                     @csrf
+
                                     <select name="authority_id" class="form-select" required>
                                         <option value="">Seleccionar Autoridad</option>
                                         @forelse($autoridades as $autoridad)
@@ -104,12 +91,50 @@
                                         @endforelse
                                     </select>
 
-                                    <button type="submit" class="btn btn-success btn-sm mt-2">
+                                    <button type="button"
+                                            class="btn btn-success btn-sm mt-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalAsignar{{ $reporte->id_report }}">
                                         Asignar Reporte
                                     </button>
                                 </form>
                             </td>
                         </tr>
+
+                        <!-- MODAL CONFIRMAR ASIGNACION -->
+                        <div class="modal fade" id="modalAsignar{{ $reporte->id_report }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border-0 shadow-lg rounded-4">
+
+                                    <div class="modal-header bg-success text-white rounded-top-4">
+                                        <h5 class="modal-title">Confirmar asignacion</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body text-center p-4">
+                                        <div class="mb-3" style="font-size: 48px;">🛡️</div>
+                                        <h5 class="fw-bold">¿Deseas asignar este reporte?</h5>
+                                        <p class="text-muted mb-0">
+                                            El reporte sera enviado a la autoridad seleccionada.
+                                        </p>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center border-0 pb-4">
+                                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+
+                                        <button type="button"
+                                                class="btn btn-success rounded-pill px-4"
+                                                onclick="document.getElementById('formAsignar{{ $reporte->id_report }}').requestSubmit();">
+                                            Si, asignar
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                     @empty
                         <tr>
                             <td colspan="7" class="text-center">
@@ -164,34 +189,41 @@
                                     Reasignar
                                 </button>
 
-                                <form action="{{ route('admin.asignaciones.cancel', $asignacion->id_assignment) }}"
-                                      method="POST"
-                                      onsubmit="return confirm('¿Deseas cancelar esta asignacion? El reporte volvera a Recibido.')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        Cancelar
-                                    </button>
-                                </form>
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalCancelar{{ $asignacion->id_assignment }}">
+                                    Cancelar
+                                </button>
 
+                                <!-- MODAL REASIGNAR -->
                                 <div class="modal fade"
                                      id="modalReasignar{{ $asignacion->id_assignment }}"
                                      tabindex="-1"
                                      aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow-lg rounded-4">
+
                                             <form action="{{ route('admin.asignaciones.update', $asignacion->id_assignment) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
 
-                                                <div class="modal-header">
+                                                <div class="modal-header bg-primary text-white rounded-top-4">
                                                     <h5 class="modal-title">Reasignar autoridad</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                                 </div>
 
-                                                <div class="modal-body">
+                                                <div class="modal-body p-4">
+                                                    <div class="text-center mb-3" style="font-size: 48px;">
+                                                        🔄
+                                                    </div>
+
+                                                    <p class="text-muted text-center">
+                                                        Selecciona la nueva autoridad que atendera este reporte.
+                                                    </p>
+
                                                     <div class="mb-3">
-                                                        <label class="form-label">Seleccionar nueva autoridad</label>
+                                                        <label class="form-label fw-semibold">Seleccionar nueva autoridad</label>
                                                         <select name="authority_id" class="form-select" required>
                                                             <option value="">Seleccione una autoridad</option>
                                                             @foreach($autoridades as $autoridad)
@@ -208,15 +240,56 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <div class="modal-footer justify-content-center border-0 pb-4">
+                                                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">
                                                         Cerrar
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary">
+
+                                                    <button type="submit" class="btn btn-primary rounded-pill px-4">
                                                         Guardar cambios
                                                     </button>
                                                 </div>
                                             </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MODAL CANCELAR ASIGNACION -->
+                                <div class="modal fade" id="modalCancelar{{ $asignacion->id_assignment }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow-lg rounded-4">
+
+                                            <div class="modal-header bg-danger text-white rounded-top-4">
+                                                <h5 class="modal-title">Cancelar asignacion</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body text-center p-4">
+                                                <div class="mb-3" style="font-size: 48px;">⚠️</div>
+
+                                                <h5 class="fw-bold">¿Deseas cancelar esta asignacion?</h5>
+
+                                                <p class="text-muted mb-0">
+                                                    El reporte volvera al estado Recibido y podra asignarse nuevamente.
+                                                </p>
+                                            </div>
+
+                                            <div class="modal-footer justify-content-center border-0 pb-4">
+                                                <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">
+                                                    No, volver
+                                                </button>
+
+                                                <form action="{{ route('admin.asignaciones.cancel', $asignacion->id_assignment) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit" class="btn btn-danger rounded-pill px-4">
+                                                        Si, cancelar
+                                                    </button>
+                                                </form>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -236,5 +309,72 @@
         </div>
 
     </div>
+
+    @if(session('success') || $errors->any())
+        <div class="modal fade" id="respuestaAsignacionModal" tabindex="-1" aria-labelledby="respuestaAsignacionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+
+                    <div class="modal-header {{ session('success') ? 'bg-success' : 'bg-danger' }} text-white rounded-top-4">
+                        <h5 class="modal-title" id="respuestaAsignacionModalLabel">
+                            {{ session('success') ? 'Proceso realizado' : 'Datos incorrectos' }}
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Cerrar">
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center p-4">
+
+                        <div class="mb-3" style="font-size: 48px;">
+                            {{ session('success') ? '✅' : '⚠️' }}
+                        </div>
+
+                        @if(session('success'))
+                            <h5 class="fw-bold mb-2">Operacion exitosa</h5>
+
+                            <p class="text-muted mb-0">
+                                {{ session('success') }}
+                            </p>
+                        @endif
+
+                        @if($errors->any())
+                            <h5 class="fw-bold mb-3">Revisa la informacion</h5>
+
+                            <ul class="text-start mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                    </div>
+
+                    <div class="modal-footer justify-content-center border-0 pb-4">
+                        <button type="button"
+                                class="btn {{ session('success') ? 'btn-success' : 'btn-danger' }} px-4 rounded-pill"
+                                data-bs-dismiss="modal">
+                            Entendido
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const respuestaAsignacionModal = new bootstrap.Modal(document.getElementById('respuestaAsignacionModal'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+                respuestaAsignacionModal.show();
+            });
+        </script>
+    @endif
 
 @endsection
