@@ -41,6 +41,14 @@ class AuditLogModel extends Model
         'new_data',
         'changed_by_user_id',
         'changed_by_type',
+
+        // ==========================================================
+        // AGREGADO:
+        // Guarda el usuario conectado directamente a PostgreSQL
+        // Ejemplo: postgres, admin, irving, etc.
+        // ==========================================================
+        'db_user',
+
         'source_ip',
         'user_agent',
         'created_at',
