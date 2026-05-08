@@ -25,6 +25,8 @@ class AuthorityAttendedController extends Controller
                 'r.description',
                 'r.latitude',
                 'r.longitude',
+                'r.municipality',
+                'r.locality',
                 'r.status_id',
                 DB::raw("CONCAT(r.latitude, ', ', r.longitude) as location"),
                 'e.description as ecosystem',
@@ -32,7 +34,7 @@ class AuthorityAttendedController extends Controller
                 'rs.description as status'
             )
             ->where('a.authority_id', $usuario->id_user)
-            ->where('r.status_id', 4) // Atendido
+            ->where('r.status_id', 4)
             ->groupBy(
                 'a.id_assignment',
                 'a.assignment_date',
@@ -42,6 +44,8 @@ class AuthorityAttendedController extends Controller
                 'r.description',
                 'r.latitude',
                 'r.longitude',
+                'r.municipality',
+                'r.locality',
                 'r.status_id',
                 'e.description',
                 'rs.description'

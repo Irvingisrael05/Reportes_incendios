@@ -79,6 +79,7 @@
                     <th>Nombre completo</th>
                     <th>Usuario</th>
                     <th>Ubicacion</th>
+                    <th>Municipio / Localidad</th>
                     <th>Ecosistema</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
@@ -98,6 +99,11 @@
                         </td>
                         <td>{{ $reporte->username ?? '' }}</td>
                         <td>{{ $reporte->location }}</td>
+                        <td>
+                            <strong>Municipio:</strong> {{ $reporte->municipality ?? 'No disponible' }}
+                            <br>
+                            <strong>Localidad:</strong> {{ $reporte->locality ?? 'No disponible' }}
+                        </td>
                         <td>{{ $reporte->ecosystem }}</td>
                         <td>{{ $reporte->category }}</td>
                         <td>{{ $reporte->description }}</td>
@@ -214,7 +220,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center">
+                        <td colspan="10" class="text-center">
                             No hay reportes recibidos
                         </td>
                     </tr>
@@ -236,6 +242,7 @@
                     <th>Nombre completo</th>
                     <th>Usuario</th>
                     <th>Ubicacion</th>
+                    <th>Municipio / Localidad</th>
                     <th>Ecosistema</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
@@ -254,6 +261,11 @@
                         </td>
                         <td>{{ $reporte->username ?? '' }}</td>
                         <td>{{ $reporte->location }}</td>
+                        <td>
+                            <strong>Municipio:</strong> {{ $reporte->municipality ?? 'No disponible' }}
+                            <br>
+                            <strong>Localidad:</strong> {{ $reporte->locality ?? 'No disponible' }}
+                        </td>
                         <td>{{ $reporte->ecosystem }}</td>
                         <td>{{ $reporte->category }}</td>
                         <td>{{ $reporte->description }}</td>
@@ -265,7 +277,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="9" class="text-center">
                             No hay reportes asignados
                         </td>
                     </tr>
@@ -287,6 +299,7 @@
                     <th>Nombre completo</th>
                     <th>Usuario</th>
                     <th>Ubicacion</th>
+                    <th>Municipio / Localidad</th>
                     <th>Ecosistema</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
@@ -305,6 +318,11 @@
                         </td>
                         <td>{{ $reporte->username ?? '' }}</td>
                         <td>{{ $reporte->location }}</td>
+                        <td>
+                            <strong>Municipio:</strong> {{ $reporte->municipality ?? 'No disponible' }}
+                            <br>
+                            <strong>Localidad:</strong> {{ $reporte->locality ?? 'No disponible' }}
+                        </td>
                         <td>{{ $reporte->ecosystem }}</td>
                         <td>{{ $reporte->category }}</td>
                         <td>{{ $reporte->description }}</td>
@@ -316,7 +334,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="9" class="text-center">
                             No hay reportes en proceso
                         </td>
                     </tr>
@@ -338,6 +356,7 @@
                     <th>Nombre completo</th>
                     <th>Usuario</th>
                     <th>Ubicacion</th>
+                    <th>Municipio / Localidad</th>
                     <th>Ecosistema</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
@@ -356,6 +375,11 @@
                         </td>
                         <td>{{ $reporte->username ?? '' }}</td>
                         <td>{{ $reporte->location }}</td>
+                        <td>
+                            <strong>Municipio:</strong> {{ $reporte->municipality ?? 'No disponible' }}
+                            <br>
+                            <strong>Localidad:</strong> {{ $reporte->locality ?? 'No disponible' }}
+                        </td>
                         <td>{{ $reporte->ecosystem }}</td>
                         <td>{{ $reporte->category }}</td>
                         <td>{{ $reporte->description }}</td>
@@ -367,7 +391,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="9" class="text-center">
                             No hay reportes finalizados
                         </td>
                     </tr>

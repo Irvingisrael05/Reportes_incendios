@@ -7,14 +7,10 @@
         'resources/css/generar_reportes.css'
     ])
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
     <div class="card card-custom shadow-lg border-0">
-
         <div class="card-body p-5">
 
             <div class="text-center mb-5">
-
                 <h3 class="fw-bold" style="color:#1B5E20;">
                     Nuevo Reporte de Incendio
                 </h3>
@@ -22,7 +18,6 @@
                 <p class="text-muted">
                     Complete la informacion requerida
                 </p>
-
             </div>
 
             <form id="formReporte" action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data">
@@ -30,33 +25,60 @@
 
                 <!-- MAPA -->
                 <div class="row mb-4">
-
                     <div class="col-md-6">
-
                         <label class="form-label fw-semibold">
                             Seleccione ubicacion en el mapa
                         </label>
 
-                        <div id="map" style="height: 350px;"></div>
-
+                        <div id="map" style="height: 350px; border-radius: 12px;"></div>
                     </div>
 
                     <div class="col-md-6 d-flex flex-column justify-content-center">
 
-                        <button type="button" class="btn-location mb-3" onclick="obtenerUbicacion()">
+                        <button type="button"
+                                class="btn-location mb-3"
+                                onclick="obtenerUbicacion()">
                             📍 Usar Ubicacion Actual
                         </button>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Latitud</label>
-                            <input type="text" id="latitude" name="latitude"
-                                   class="form-control" readonly required>
+                            <input type="text"
+                                   id="latitude"
+                                   name="latitude"
+                                   class="form-control"
+                                   readonly
+                                   required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Longitud</label>
-                            <input type="text" id="longitude" name="longitude"
-                                   class="form-control" readonly required>
+                            <input type="text"
+                                   id="longitude"
+                                   name="longitude"
+                                   class="form-control"
+                                   readonly
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Municipio</label>
+                            <input type="text"
+                                   id="municipality"
+                                   name="municipality"
+                                   class="form-control"
+                                   readonly
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Localidad</label>
+                            <input type="text"
+                                   id="locality"
+                                   name="locality"
+                                   class="form-control"
+                                   readonly
+                                   required>
                         </div>
 
                     </div>
@@ -64,11 +86,16 @@
 
                 <!-- ECOSISTEMA Y CATEGORIA -->
                 <div class="row">
-
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Tipo de Ecosistema</label>
-                        <select class="form-select" name="ecosystem_id" required>
+                        <label class="form-label fw-semibold">
+                            Tipo de Ecosistema
+                        </label>
+
+                        <select class="form-select"
+                                name="ecosystem_id"
+                                required>
                             <option value="">Seleccione ecosistema</option>
+
                             @foreach($ecosystems as $eco)
                                 <option value="{{ $eco->id_ecosystem }}">
                                     {{ $eco->description }}
@@ -78,9 +105,15 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Categoria del Incendio</label>
-                        <select class="form-select" name="category_id" required>
+                        <label class="form-label fw-semibold">
+                            Categoria del Incendio
+                        </label>
+
+                        <select class="form-select"
+                                name="category_id"
+                                required>
                             <option value="">Seleccione categoria</option>
+
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id_category }}">
                                     {{ $cat->description }}
@@ -88,7 +121,6 @@
                             @endforeach
                         </select>
                     </div>
-
                 </div>
 
                 <!-- DESCRIPCION -->
@@ -96,8 +128,12 @@
                     <label class="form-label fw-semibold">
                         Descripcion del Incidente
                     </label>
-                    <textarea class="form-control" name="description" rows="4"
-                              placeholder="Describa la situacion observada..." required></textarea>
+
+                    <textarea class="form-control"
+                              name="description"
+                              rows="4"
+                              placeholder="Describa la situacion observada..."
+                              required></textarea>
                 </div>
 
                 <!-- IMAGEN -->
@@ -105,7 +141,12 @@
                     <label class="form-label fw-semibold">
                         Subir Evidencia
                     </label>
-                    <input type="file" class="form-control" name="image" accept="image/*" capture="environment">
+
+                    <input type="file"
+                           class="form-control"
+                           name="image"
+                           accept="image/*"
+                           capture="environment">
                 </div>
 
                 <div class="d-flex justify-content-end">
@@ -124,7 +165,12 @@
 
 
     <!-- MODAL CONFIRMAR REPORTE -->
-    <div class="modal fade" id="confirmarReporteModal" tabindex="-1" aria-labelledby="confirmarReporteModalLabel" aria-hidden="true">
+    <div class="modal fade"
+         id="confirmarReporteModal"
+         tabindex="-1"
+         aria-labelledby="confirmarReporteModalLabel"
+         aria-hidden="true">
+
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
 
@@ -145,7 +191,9 @@
                         🔥
                     </div>
 
-                    <h5 class="fw-bold mb-2">¿Deseas generar este reporte?</h5>
+                    <h5 class="fw-bold mb-2">
+                        ¿Deseas generar este reporte?
+                    </h5>
 
                     <p class="text-muted mb-0">
                         Verifica que la ubicacion, categoria y descripcion sean correctas antes de enviarlo.
@@ -171,8 +219,13 @@
     </div>
 
 
-    <!-- MODAL GEOLOCALIZACION NO SOPORTADA -->
-    <div class="modal fade" id="geoModal" tabindex="-1" aria-labelledby="geoModalLabel" aria-hidden="true">
+    <!-- MODAL GEOLOCALIZACION -->
+    <div class="modal fade"
+         id="geoModal"
+         tabindex="-1"
+         aria-labelledby="geoModalLabel"
+         aria-hidden="true">
+
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
 
@@ -193,10 +246,13 @@
                         📍
                     </div>
 
-                    <h5 class="fw-bold mb-2">No se pudo usar la ubicacion actual</h5>
+                    <h5 class="fw-bold mb-2">
+                        No se pudo usar la ubicacion actual
+                    </h5>
 
                     <p class="text-muted mb-0">
-                        Tu navegador no soporta geolocalizacion. Puedes seleccionar la ubicacion directamente en el mapa.
+                        Tu navegador no soporta geolocalizacion o no otorgaste permisos.
+                        Puedes seleccionar la ubicacion directamente en el mapa.
                     </p>
                 </div>
 
@@ -213,8 +269,14 @@
     </div>
 
 
+    <!-- MODAL RESPUESTA -->
     @if(session('success') || $errors->any())
-        <div class="modal fade" id="respuestaReporteModal" tabindex="-1" aria-labelledby="respuestaReporteModalLabel" aria-hidden="true">
+        <div class="modal fade"
+             id="respuestaReporteModal"
+             tabindex="-1"
+             aria-labelledby="respuestaReporteModalLabel"
+             aria-hidden="true">
+
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow-lg rounded-4">
 
@@ -231,7 +293,6 @@
                     </div>
 
                     <div class="modal-body text-center p-4">
-
                         <div class="mb-3" style="font-size: 48px;">
                             {{ session('success') ? '✅' : '⚠️' }}
                         </div>
@@ -253,7 +314,6 @@
                                 @endforeach
                             </ul>
                         @endif
-
                     </div>
 
                     <div class="modal-footer justify-content-center border-0 pb-4">
@@ -270,10 +330,13 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const respuestaReporteModal = new bootstrap.Modal(document.getElementById('respuestaReporteModal'), {
-                    backdrop: 'static',
-                    keyboard: false
-                });
+                const respuestaReporteModal = new bootstrap.Modal(
+                    document.getElementById('respuestaReporteModal'),
+                    {
+                        backdrop: 'static',
+                        keyboard: false
+                    }
+                );
 
                 respuestaReporteModal.show();
             });
@@ -281,40 +344,143 @@
     @endif
 
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
+    <!-- GOOGLE MAPS -->
     <script>
-        const map = L.map('map').setView([19.4326,-99.1332], 10);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-
+        let map;
         let marker;
+        let geocoder;
 
-        map.on('click', function(e){
-            if(marker) map.removeLayer(marker);
-            marker = L.marker(e.latlng).addTo(map);
-            document.getElementById('latitude').value = e.latlng.lat;
-            document.getElementById('longitude').value = e.latlng.lng;
-        });
+        window.initMap = function () {
+            const valleDeBravo = {
+                lat: 19.1951,
+                lng: -100.1313
+            };
+
+            geocoder = new google.maps.Geocoder();
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: valleDeBravo,
+                zoom: 13,
+                mapTypeId: "terrain"
+            });
+
+            map.addListener("click", function(event) {
+                const lat = event.latLng.lat();
+                const lng = event.latLng.lng();
+
+                colocarMarcador({
+                    lat: lat,
+                    lng: lng
+                });
+
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                obtenerMunicipioLocalidad(lat, lng);
+            });
+        }
+
+        function colocarMarcador(posicion) {
+            if (marker) {
+                marker.setMap(null);
+            }
+
+            marker = new google.maps.Marker({
+                position: posicion,
+                map: map
+            });
+        }
 
         function obtenerUbicacion() {
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position){
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-                    map.setView([lat, lng], 13);
-                    if(marker) map.removeLayer(marker);
-                    marker = L.marker([lat, lng]).addTo(map);
-                    document.getElementById('latitude').value = lat;
-                    document.getElementById('longitude').value = lng;
-                });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+
+                        const posicion = {
+                            lat: lat,
+                            lng: lng
+                        };
+
+                        map.setCenter(posicion);
+                        map.setZoom(15);
+
+                        colocarMarcador(posicion);
+
+                        document.getElementById("latitude").value = lat;
+                        document.getElementById("longitude").value = lng;
+
+                        obtenerMunicipioLocalidad(lat, lng);
+                    },
+                    function() {
+                        const geoModal = new bootstrap.Modal(
+                            document.getElementById('geoModal')
+                        );
+
+                        geoModal.show();
+                    }
+                );
             } else {
-                const geoModal = new bootstrap.Modal(document.getElementById('geoModal'));
+                const geoModal = new bootstrap.Modal(
+                    document.getElementById('geoModal')
+                );
+
                 geoModal.show();
             }
         }
+
+        function obtenerMunicipioLocalidad(lat, lng) {
+            const latlng = {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng)
+            };
+
+            geocoder.geocode({ location: latlng }, function(results, status) {
+                let municipality = 'Unknown';
+                let locality = 'Unknown';
+
+                if (status === 'OK' && results.length > 0) {
+
+                    results.forEach(function(result) {
+                        result.address_components.forEach(function(component) {
+
+                            if (
+                                component.types.includes('administrative_area_level_2') ||
+                                component.types.includes('administrative_area_level_3')
+                            ) {
+                                if (municipality === 'Unknown') {
+                                    municipality = component.long_name;
+                                }
+                            }
+
+                            if (
+                                component.types.includes('locality') ||
+                                component.types.includes('sublocality') ||
+                                component.types.includes('sublocality_level_1') ||
+                                component.types.includes('neighborhood') ||
+                                component.types.includes('political')
+                            ) {
+                                if (locality === 'Unknown') {
+                                    locality = component.long_name;
+                                }
+                            }
+
+                        });
+                    });
+                }
+
+                document.getElementById("municipality").value = municipality;
+                document.getElementById("locality").value = locality;
+            });
+        }
+    </script>
+
+    <!-- GOOGLE MAPS API -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDxIsV41pknWEy97YGpeaQoZ7JdyXlEzo&callback=initMap"
+        async
+        defer>
     </script>
 
 @endsection

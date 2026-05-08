@@ -14,6 +14,7 @@
                 <th>Fecha de Reporte</th>
                 <th>Fecha de Atencion</th>
                 <th>Ubicacion</th>
+                <th>Municipio / Localidad</th>
                 <th>Ecosistema</th>
                 <th>Categoria</th>
                 <th>Estado</th>
@@ -27,6 +28,11 @@
                     <td>{{ $report->report_date }}</td>
                     <td>{{ $report->attended_date }}</td>
                     <td>{{ $report->location }}</td>
+                    <td>
+                        <strong>Municipio:</strong> {{ $report->municipality ?? 'No disponible' }}
+                        <br>
+                        <strong>Localidad:</strong> {{ $report->locality ?? 'No disponible' }}
+                    </td>
                     <td>{{ $report->ecosystem }}</td>
                     <td>{{ $report->category }}</td>
                     <td>
@@ -81,6 +87,16 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        <strong>Municipio:</strong>
+                                        <p>{{ $report->municipality ?? 'No disponible' }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Localidad:</strong>
+                                        <p>{{ $report->locality ?? 'No disponible' }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <strong>Ecosistema:</strong>
                                         <p>{{ $report->ecosystem }}</p>
                                     </div>
@@ -121,7 +137,7 @@
 
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="8" class="text-center">
                         No hay incendios atendidos
                     </td>
                 </tr>

@@ -13,6 +13,7 @@
             <tr>
                 <th>Fecha de Reporte</th>
                 <th>Ubicacion</th>
+                <th>Municipio / Localidad</th>
                 <th>Ecosistema</th>
                 <th>Categoria</th>
                 <th>Descripcion</th>
@@ -25,10 +26,21 @@
             @forelse($reports as $report)
                 <tr>
                     <td>{{ $report->report_date }}</td>
+
                     <td>{{ $report->location }}</td>
+
+                    <td>
+                        <strong>Municipio:</strong>
+                        {{ $report->municipality ?? 'No disponible' }}
+                        <br>
+                        <strong>Localidad:</strong>
+                        {{ $report->locality ?? 'No disponible' }}
+                    </td>
+
                     <td>{{ $report->ecosystem }}</td>
                     <td>{{ $report->category }}</td>
                     <td>{{ $report->description }}</td>
+
                     <td>
                         @if($report->status_id == 2)
                             <span class="badge bg-secondary">Asignado</span>
@@ -38,50 +50,42 @@
                             <span class="badge bg-warning text-dark">{{ $report->status }}</span>
                         @endif
                     </td>
-                    <td class="d-flex gap-2 flex-wrap">
 
+                    <td class="d-flex gap-2 flex-wrap">
                         @if($report->status_id == 2)
-                            <button type="button"
-                                    class="btn btn-success btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#aceptarModal{{ $report->id_report }}">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#aceptarModal{{ $report->id_report }}">
                                 Aceptar
                             </button>
 
-                            <button type="button"
-                                    class="btn btn-danger btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#rechazarModal{{ $report->id_report }}">
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rechazarModal{{ $report->id_report }}">
                                 Rechazar
                             </button>
                         @endif
 
                         @if($report->status_id == 3)
-                            <button type="button"
-                                    class="btn btn-success btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#atenderModal{{ $report->id_report }}">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#atenderModal{{ $report->id_report }}">
                                 Atender
                             </button>
                         @endif
 
-                        <button class="btn btn-info btn-sm"
-                                type="button"
-                                onclick="toggleDetails('detalle{{ $report->id_report }}')">
+                        <button class="btn btn-info btn-sm" type="button" onclick="toggleDetails('detalle{{ $report->id_report }}')">
                             Ver Detalles
                         </button>
                     </td>
                 </tr>
 
                 <tr id="detalle{{ $report->id_report }}" class="collapse">
-                    <td colspan="7">
+                    <td colspan="8">
                         <div class="p-3 bg-light">
                             <h5 class="fw-bold">Detalles del Reporte</h5>
+
                             <ul class="mb-3">
                                 <li><strong>ID Reporte:</strong> {{ $report->id_report }}</li>
                                 <li><strong>Fecha de reporte:</strong> {{ $report->report_date }}</li>
                                 <li><strong>Fecha de asignacion:</strong> {{ $report->assignment_date }}</li>
                                 <li><strong>Ubicacion:</strong> {{ $report->location }}</li>
+                                <li><strong>Municipio:</strong> {{ $report->municipality ?? 'No disponible' }}</li>
+                                <li><strong>Localidad:</strong> {{ $report->locality ?? 'No disponible' }}</li>
                                 <li><strong>Latitud:</strong> {{ $report->latitude }}</li>
                                 <li><strong>Longitud:</strong> {{ $report->longitude }}</li>
                                 <li><strong>Ecosistema:</strong> {{ $report->ecosystem }}</li>
@@ -90,9 +94,7 @@
                                 <li><strong>Estado:</strong> {{ $report->status }}</li>
                             </ul>
 
-                            <button class="btn btn-warning btn-sm"
-                                    type="button"
-                                    onclick="toggleDetails('detalle{{ $report->id_report }}')">
+                            <button class="btn btn-warning btn-sm" type="button" onclick="toggleDetails('detalle{{ $report->id_report }}')">
                                 Ocultar Detalles
                             </button>
                         </div>
@@ -104,7 +106,6 @@
                     <div class="modal fade" id="aceptarModal{{ $report->id_report }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content border-0 shadow-lg rounded-4">
-
                                 <div class="modal-header bg-success text-white rounded-top-4">
                                     <h5 class="modal-title">Aceptar reporte</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -113,9 +114,7 @@
                                 <div class="modal-body text-center p-4">
                                     <div class="mb-3" style="font-size: 48px;">✅</div>
                                     <h5 class="fw-bold">¿Deseas aceptar este reporte?</h5>
-                                    <p class="text-muted mb-0">
-                                        El reporte pasara a estado En Proceso.
-                                    </p>
+                                    <p class="text-muted mb-0">El reporte pasara a estado En Proceso.</p>
                                 </div>
 
                                 <div class="modal-footer justify-content-center border-0 pb-4">
@@ -130,7 +129,6 @@
                                         </button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -139,7 +137,6 @@
                     <div class="modal fade" id="rechazarModal{{ $report->id_report }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content border-0 shadow-lg rounded-4">
-
                                 <div class="modal-header bg-danger text-white rounded-top-4">
                                     <h5 class="modal-title">Rechazar reporte</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -148,9 +145,7 @@
                                 <div class="modal-body text-center p-4">
                                     <div class="mb-3" style="font-size: 48px;">⚠️</div>
                                     <h5 class="fw-bold">¿Deseas rechazar este reporte?</h5>
-                                    <p class="text-muted mb-0">
-                                        El reporte regresara a Recibidos para que pueda ser reasignado.
-                                    </p>
+                                    <p class="text-muted mb-0">El reporte regresara a Recibidos para que pueda ser reasignado.</p>
                                 </div>
 
                                 <div class="modal-footer justify-content-center border-0 pb-4">
@@ -165,7 +160,6 @@
                                         </button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -176,7 +170,6 @@
                     <div class="modal fade" id="atenderModal{{ $report->id_report }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content border-0 shadow-lg rounded-4">
-
                                 <div class="modal-header bg-success text-white rounded-top-4">
                                     <h5 class="modal-title">Marcar como atendido</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -202,7 +195,6 @@
                                         </button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -210,7 +202,7 @@
 
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="8" class="text-center">
                         No tienes reportes asignados
                     </td>
                 </tr>
@@ -223,7 +215,6 @@
         <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow-lg rounded-4">
-
                     <div class="modal-header bg-success text-white rounded-top-4">
                         <h5 class="modal-title">Proceso realizado</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -242,7 +233,6 @@
                             Entendido
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>

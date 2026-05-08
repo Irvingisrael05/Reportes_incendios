@@ -53,6 +53,7 @@
                     <tr>
                         <th>Fecha</th>
                         <th>Ubicacion</th>
+                        <th>Municipio / Localidad</th>
                         <th>Ecosistema</th>
                         <th>Categoria</th>
                         <th>Descripcion</th>
@@ -65,11 +66,22 @@
                     @forelse($reportes as $reporte)
                         <tr>
                             <td>{{ $reporte->report_date }}</td>
+
                             <td>{{ $reporte->location }}</td>
+
+                            <td>
+                                <strong>Municipio:</strong>
+                                {{ $reporte->municipality ?? 'No disponible' }}
+                                <br>
+                                <strong>Localidad:</strong>
+                                {{ $reporte->locality ?? 'No disponible' }}
+                            </td>
+
                             <td>{{ $reporte->ecosystem }}</td>
                             <td>{{ $reporte->category }}</td>
                             <td>{{ $reporte->description }}</td>
                             <td>{{ $reporte->climatografia }}</td>
+
                             <td>
                                 <form id="formAsignar{{ $reporte->id_report }}"
                                       action="{{ route('admin.asignaciones.store', $reporte->id_report) }}"
@@ -137,7 +149,7 @@
 
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">
+                            <td colspan="8" class="text-center">
                                 No hay reportes disponibles para asignar
                             </td>
                         </tr>

@@ -23,18 +23,24 @@ class AdminAssignmentController extends Controller
     {
         // 1. Reportes recibidos sin asignar (status = 'Recibido' y sin asignación)
         $reportes = ReportModel::whereHas('status', function ($query) {
-                $query->where('description', 'Recibido');
-            })
-            ->whereDoesntHave('assignments') // no tiene asignación relacionada
+            $query->where('description', 'Recibido');
+        })
+            ->whereDoesntHave('assignments')
             ->with(['ecosystem', 'weather', 'evidences.category'])
             ->get()
             ->map(function ($report) {
-                // Calcular categoría mínima (para simular el MIN(c.description))
-                $minCategory = $report->evidences->pluck('category.description')->filter()->min();
+
+                // Categoria minima
+                $minCategory = $report->evidences
+                    ->pluck('category.description')
+                    ->filter()
+                    ->min();
+
                 $category = $minCategory ?: 'Sin categoria';
 
-                // Construir climatografía
+                // Climatografia
                 $weather = $report->weather;
+
                 $climatografia = sprintf(
                     '%s°C / %s%% / %s kmh',
                     $weather->temperature ?? 'Sin dato',
@@ -43,70 +49,116 @@ class AdminAssignmentController extends Controller
                 );
 
                 return (object) [
-                    'id_report'    => $report->id_report,
-                    'report_date'  => $report->report_date,
-                    'location'     => $report->latitude . ', ' . $report->longitude,
-                    'ecosystem'    => $report->ecosystem->description ?? 'N/A',
-                    'category'     => $category,
-                    'description'  => $report->description,
-                    'climatografia'=> $climatografia,
+
+                    'id_report' => $report->id_report,
+
+                    'report_date' => $report->report_date,
+
+                    // NUEVOS CAMPOS
+                    'latitude' => $report->latitude,
+                    'longitude' => $report->longitude,
+                    'municipality' => $report->municipality,
+                    'locality' => $report->locality,
+
+                    // Compatibilidad anterior
+                    'location' => $report->latitude . ', ' . $report->longitude,
+
+                    'ecosystem' => $report->ecosystem->description ?? 'N/A',
+
+                    'category' => $category,
+
+                    'description' => $report->description,
+
+                    'climatografia' => $climatografia,
                 ];
             })
             ->sortByDesc('report_date')
             ->values();
 
-        // 2. Autoridades (usuarios con rol 'autoridad')
+        // 2. Autoridades
         $autoridades = User::whereHas('role', function ($query) {
-                $query->whereRaw('LOWER(role_type) = ?', ['autoridad']);
-            })
+            $query->whereRaw('LOWER(role_type) = ?', ['autoridad']);
+        })
             ->with('person')
-            ->with(['authorityRequest' => function ($query) {
-                $query->where('status', 'approved');
-            }])
+            ->with([
+                'authorityRequest' => function ($query) {
+                    $query->where('status', 'approved');
+                }
+            ])
             ->get()
             ->map(function ($user) {
+
                 return (object) [
-                    'id_user'      => $user->id_user,
-                    'username'     => $user->username,
-                    'first_name'   => $user->person->first_name ?? '',
-                    'last_name'    => $user->person->last_name ?? '',
-                    'middle_name'  => $user->person->middle_name ?? '',
+
+                    'id_user' => $user->id_user,
+
+                    'username' => $user->username,
+
+                    'first_name' => $user->person->first_name ?? '',
+
+                    'last_name' => $user->person->last_name ?? '',
+
+                    'middle_name' => $user->person->middle_name ?? '',
+
                     'company_name' => $user->authorityRequest->company_name ?? 'Sin empresa',
                 ];
             })
             ->sortBy('first_name')
             ->values();
 
-        // 3. Asignaciones ya realizadas (con datos de reporte, usuario, persona, empresa)
-        $asignaciones = AssignmentModel::with(['report', 'authority.person', 'authority.authorityRequest' => function ($q) {
+        // 3. Asignaciones realizadas
+        $asignaciones = AssignmentModel::with([
+            'report',
+            'authority.person',
+            'authority.authorityRequest' => function ($q) {
                 $q->where('status', 'approved');
-            }])
+            }
+        ])
             ->get()
             ->map(function ($assignment) {
+
                 $authority = $assignment->authority;
+
                 $person = $authority->person ?? null;
+
                 $company = $authority->authorityRequest->company_name ?? 'Sin empresa';
 
                 return (object) [
-                    'id_assignment'   => $assignment->id_assignment,
-                    'report_id'       => $assignment->report_id,
-                    'authority_id'    => $assignment->authority_id,
+
+                    'id_assignment' => $assignment->id_assignment,
+
+                    'report_id' => $assignment->report_id,
+
+                    'authority_id' => $assignment->authority_id,
+
                     'assignment_date' => $assignment->assignment_date,
-                    'company_name'    => $company,
-                    'first_name'      => $person->first_name ?? '',
-                    'last_name'       => $person->last_name ?? '',
-                    'middle_name'     => $person->middle_name ?? '',
-                    'username'        => $authority->username ?? '',
+
+                    'company_name' => $company,
+
+                    'first_name' => $person->first_name ?? '',
+
+                    'last_name' => $person->last_name ?? '',
+
+                    'middle_name' => $person->middle_name ?? '',
+
+                    'username' => $authority->username ?? '',
                 ];
             })
             ->sortByDesc('assignment_date')
             ->values();
 
-        return view('administradores.asignar_reportes', compact('reportes', 'autoridades', 'asignaciones'));
+        return view(
+            'administradores.asignar_reportes',
+            compact(
+                'reportes',
+                'autoridades',
+                'asignaciones'
+            )
+        );
     }
 
     /**
-     * Almacena una nueva asignación y cambia el estado del reporte a "En proceso" (status_id = 3).
+     * Crear asignacion
      */
     public function store(Request $request, $id)
     {
@@ -115,18 +167,24 @@ class AdminAssignmentController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $id) {
-            // Crear asignación con Eloquent
+
             AssignmentModel::create([
-                'report_id'      => $id,
-                'authority_id'   => $request->authority_id,
-                'assignment_date'=> now(),
-                'attended_date'  => null,
+
+                'report_id' => $id,
+
+                'authority_id' => $request->authority_id,
+
+                'assignment_date' => now(),
+
+                'attended_date' => null,
             ]);
 
-            // Actualizar el reporte (si está en estado Recibido = 1, lo cambiamos a En proceso = 3)
             $report = ReportModel::find($id);
+
             if ($report && $report->status_id == 1) {
+
                 $report->status_id = 3;
+
                 $report->save();
             }
         });
@@ -137,7 +195,7 @@ class AdminAssignmentController extends Controller
     }
 
     /**
-     * Reasigna una asignación existente (cambia la autoridad).
+     * Reasignar autoridad
      */
     public function update(Request $request, $id)
     {
@@ -146,8 +204,11 @@ class AdminAssignmentController extends Controller
         ]);
 
         $assignment = AssignmentModel::find($id);
+
         if ($assignment) {
+
             $assignment->authority_id = $request->authority_id;
+
             $assignment->save();
         }
 
@@ -157,21 +218,28 @@ class AdminAssignmentController extends Controller
     }
 
     /**
-     * Cancela una asignación, elimina el registro y devuelve el reporte a "Recibido" (status_id = 1).
+     * Cancelar asignacion
      */
     public function cancel($id)
     {
         DB::transaction(function () use ($id) {
+
             $assignment = AssignmentModel::find($id);
+
             if ($assignment) {
+
                 $reportId = $assignment->report_id;
-                // Eliminar asignación
+
+                // Eliminar asignacion
                 $assignment->delete();
 
-                // Actualizar reporte a estado Recibido (1)
+                // Regresar reporte a recibido
                 $report = ReportModel::find($reportId);
+
                 if ($report) {
+
                     $report->status_id = 1;
+
                     $report->save();
                 }
             }

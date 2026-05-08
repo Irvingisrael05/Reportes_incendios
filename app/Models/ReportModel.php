@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,12 +8,11 @@ use App\Models\Traits\Auditable;
 class ReportModel extends Model
 {
     use Auditable;
-    
+
     protected $table = 'reports';
     protected $primaryKey = 'id_report';
     public $timestamps = false;
 
-    // Campos que se pueden llenar
     protected $fillable = [
         'user_id',
         'ecosystem_id',
@@ -20,6 +20,8 @@ class ReportModel extends Model
         'status_id',
         'latitude',
         'longitude',
+        'municipality',
+        'locality',
         'report_date',
         'description'
     ];
@@ -29,6 +31,4 @@ class ReportModel extends Model
     public function weather() { return $this->belongsTo(WeatherModel::class, 'weather_id', 'id_weather'); }
     public function evidences() { return $this->hasMany(EvidenceModel::class, 'report_id', 'id_report'); }
     public function assignments() { return $this->hasMany(AssignmentModel::class, 'report_id', 'id_report'); }
-
-
 }

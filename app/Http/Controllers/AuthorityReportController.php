@@ -25,6 +25,8 @@ class AuthorityReportController extends Controller
                 'r.description',
                 'r.latitude',
                 'r.longitude',
+                'r.municipality',
+                'r.locality',
                 'r.status_id',
                 DB::raw("CONCAT(r.latitude, ', ', r.longitude) as location"),
                 'e.description as ecosystem',
@@ -42,6 +44,8 @@ class AuthorityReportController extends Controller
                 'r.description',
                 'r.latitude',
                 'r.longitude',
+                'r.municipality',
+                'r.locality',
                 'r.status_id',
                 'e.description',
                 'rs.description'

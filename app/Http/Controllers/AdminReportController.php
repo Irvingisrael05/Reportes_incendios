@@ -20,6 +20,8 @@ class AdminReportController extends Controller
                 'r.id_report',
                 'r.report_date',
                 DB::raw("CONCAT(r.latitude, ', ', r.longitude) as location"),
+                'r.municipality',
+                'r.locality',
                 'e.description as ecosystem',
                 DB::raw("COALESCE(MIN(c.description), 'Sin categoria') as category"),
                 'r.description',
@@ -34,6 +36,8 @@ class AdminReportController extends Controller
                 'r.report_date',
                 'r.latitude',
                 'r.longitude',
+                'r.municipality',
+                'r.locality',
                 'e.description',
                 'r.description',
                 'rs.description',
@@ -99,9 +103,9 @@ class AdminReportController extends Controller
 
             DB::table('reports')
                 ->where('id_report', $id)
-                ->where('status_id', 1) // Recibido
+                ->where('status_id', 1)
                 ->update([
-                    'status_id' => 2 // Asignado
+                    'status_id' => 2
                 ]);
         });
 
