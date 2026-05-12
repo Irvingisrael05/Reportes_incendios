@@ -18,6 +18,8 @@
                 <th>Fecha</th>
                 <th>Latitud</th>
                 <th>Longitud</th>
+                <th>Municipio</th>
+                <th>Localidad</th>
                 <th>Ecosistema</th>
                 <th>Descripcion</th>
                 <th>Estado</th>
@@ -31,6 +33,8 @@
                     <td>{{ $report->report_date }}</td>
                     <td>{{ $report->latitude }}</td>
                     <td>{{ $report->longitude }}</td>
+                    <td>{{ $report->municipality ?? 'No disponible' }}</td>
+                    <td>{{ $report->locality ?? 'No disponible' }}</td>
                     <td>{{ $report->ecosystem->description ?? 'N/A' }}</td>
                     <td>{{ $report->description }}</td>
                     <td>
@@ -58,7 +62,6 @@
                     </td>
                 </tr>
 
-                <!-- MODAL DETALLES DEL REPORTE -->
                 <div class="modal fade" id="detalleReporte{{ $report->id_report }}" tabindex="-1" aria-labelledby="detalleReporteLabel{{ $report->id_report }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -97,6 +100,16 @@
                                     <div class="col-md-6">
                                         <strong>Longitud:</strong>
                                         <p>{{ $report->longitude }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Municipio:</strong>
+                                        <p>{{ $report->municipality ?? 'No disponible' }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <strong>Localidad:</strong>
+                                        <p>{{ $report->locality ?? 'No disponible' }}</p>
                                     </div>
 
                                     <div class="col-md-6">
@@ -142,7 +155,7 @@
 
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">
+                    <td colspan="9" class="text-center">
                         No tienes reportes registrados
                     </td>
                 </tr>

@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <div class="container-fluid">
     <div class="row">
 
@@ -123,7 +125,7 @@
 
                 <button type="button"
                         class="btn btn-danger px-4 rounded-pill"
-                        onclick="document.getElementById('logoutForm').submit();">
+                        onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                     Si, cerrar sesion
                 </button>
             </div>

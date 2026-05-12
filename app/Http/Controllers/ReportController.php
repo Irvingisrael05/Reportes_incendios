@@ -8,8 +8,8 @@ use App\Models\CategoryModel;
 use App\Models\ReportModel;
 use App\Models\EvidenceModel;
 use App\Models\WeatherModel;
+use App\Services\WeatherService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class ReportController extends Controller
 {
@@ -37,25 +37,24 @@ class ReportController extends Controller
         $lat = $request->latitude;
         $lng = $request->longitude;
 
-        $apiKey = env('OPENWEATHER_API_KEY');
+        $weatherService = new WeatherService();
 
-        $response = Http::get("https://api.openweathermap.org/data/2.5/weather", [
-            'lat' => $lat,
-            'lon' => $lng,
-            'units' => 'metric',
-            'appid' => $apiKey
-        ]);
+        $weatherData = $weatherService->getWeatherByCoordinates($lat, $lng);
 
-        $weatherData = $response->json();
+        if (!$weatherData) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'No se pudieron obtener los datos del clima. Intenta nuevamente.');
+        }
 
         $weather = WeatherModel::create([
-            'temperature' => $weatherData['main']['temp'] ?? null,
-            'humidity' => $weatherData['main']['humidity'] ?? null,
-            'precipitation' => $weatherData['rain']['1h'] ?? 0,
-            'wind_speed' => $weatherData['wind']['speed'] ?? null,
-            'wind_direction' => $weatherData['wind']['deg'] ?? null,
-            'atmospheric_pressure' => $weatherData['main']['pressure'] ?? null,
-            'cloudiness' => $weatherData['clouds']['all'] ?? null,
+            'temperature' => $weatherData['temperature'],
+            'humidity' => $weatherData['humidity'],
+            'precipitation' => $weatherData['precipitation'],
+            'wind_speed' => $weatherData['wind_speed'],
+            'wind_direction' => $weatherData['wind_direction'],
+            'atmospheric_pressure' => $weatherData['atmospheric_pressure'],
+            'cloudiness' => $weatherData['cloudiness'],
             'record_date' => now()
         ]);
 
