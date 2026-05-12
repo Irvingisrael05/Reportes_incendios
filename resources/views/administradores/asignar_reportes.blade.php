@@ -14,9 +14,7 @@
                     data-bs-toggle="tab"
                     data-bs-target="#asignar"
                     type="button"
-                    role="tab"
-                    aria-controls="asignar"
-                    aria-selected="true">
+                    role="tab">
                 Asignar Reporte
             </button>
         </li>
@@ -27,9 +25,7 @@
                     data-bs-toggle="tab"
                     data-bs-target="#ver-asignacion"
                     type="button"
-                    role="tab"
-                    aria-controls="ver-asignacion"
-                    aria-selected="false">
+                    role="tab">
                 Ver Asignacion
             </button>
         </li>
@@ -37,11 +33,7 @@
 
     <div class="tab-content" id="tabsAsignacionesContent">
 
-        <!-- TAB 1 -->
-        <div class="tab-pane fade show active"
-             id="asignar"
-             role="tabpanel"
-             aria-labelledby="asignar-tab">
+        <div class="tab-pane fade show active" id="asignar" role="tabpanel">
 
             <h4 class="fw-bold text-success mb-3">
                 Reportes Generados
@@ -80,7 +72,32 @@
                             <td>{{ $reporte->ecosystem }}</td>
                             <td>{{ $reporte->category }}</td>
                             <td>{{ $reporte->description }}</td>
-                            <td>{{ $reporte->climatografia }}</td>
+
+                            <td>
+                                <div class="small">
+                                    <div class="mb-1">
+                                        🌡️ <strong>Temp:</strong>
+                                        {{ $reporte->weather_temperature ?? 'Sin dato' }} °C
+                                    </div>
+
+                                    <div class="mb-1">
+                                        💧 <strong>Humedad:</strong>
+                                        {{ $reporte->weather_humidity ?? 'Sin dato' }} %
+                                    </div>
+
+                                    <div class="mb-1">
+                                        🌬️ <strong>Viento:</strong>
+                                        {{ $reporte->weather_wind_speed ?? 'Sin dato' }} km/h
+                                    </div>
+                                </div>
+
+                                <button type="button"
+                                        class="btn btn-outline-success btn-sm mt-2 w-100"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalClima{{ $reporte->id_report }}">
+                                    Ver detalles
+                                </button>
+                            </td>
 
                             <td>
                                 <form id="formAsignar{{ $reporte->id_report }}"
@@ -112,6 +129,102 @@
                                 </form>
                             </td>
                         </tr>
+
+                        <!-- MODAL DETALLES CLIMA -->
+                        <div class="modal fade" id="modalClima{{ $reporte->id_report }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content border-0 shadow-lg rounded-4">
+
+                                    <div class="modal-header bg-success text-white rounded-top-4">
+                                        <h5 class="modal-title">Informacion climatografica</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body p-4">
+                                        <div class="row g-3">
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">🌡️ Temperatura</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_temperature ?? 'Sin dato' }} °C</p>
+                                                    <small class="text-muted">
+                                                        Indica el calor actual en la zona del reporte.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">💧 Humedad</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_humidity ?? 'Sin dato' }} %</p>
+                                                    <small class="text-muted">
+                                                        Mientras menor sea la humedad, mas seco puede estar el ambiente.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">🌧️ Precipitacion</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_precipitation ?? 'Sin dato' }} mm</p>
+                                                    <small class="text-muted">
+                                                        Muestra si hubo lluvia reciente en la ubicacion.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">🌬️ Velocidad del viento</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_wind_speed ?? 'Sin dato' }} km/h</p>
+                                                    <small class="text-muted">
+                                                        Ayuda a estimar que tan rapido podria propagarse el fuego.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">🧭 Direccion del viento</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_wind_direction ?? 'Sin dato' }}</p>
+                                                    <small class="text-muted">
+                                                        Indica hacia donde puede desplazarse el humo o el incendio.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">☁️ Nubosidad</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_cloudiness ?? 'Sin dato' }} %</p>
+                                                    <small class="text-muted">
+                                                        Representa la cantidad de cielo cubierto por nubes.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="border rounded-3 p-3 h-100">
+                                                    <h6 class="fw-bold">📈 Presion atmosferica</h6>
+                                                    <p class="mb-1">{{ $reporte->weather_atmospheric_pressure ?? 'Sin dato' }} hPa</p>
+                                                    <small class="text-muted">
+                                                        Es un dato meteorologico que ayuda a describir las condiciones del ambiente.
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center border-0 pb-4">
+                                        <button type="button" class="btn btn-success rounded-pill px-4" data-bs-dismiss="modal">
+                                            Entendido
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- MODAL CONFIRMAR ASIGNACION -->
                         <div class="modal fade" id="modalAsignar{{ $reporte->id_report }}" tabindex="-1" aria-hidden="true">
@@ -160,10 +273,7 @@
         </div>
 
         <!-- TAB 2 -->
-        <div class="tab-pane fade"
-             id="ver-asignacion"
-             role="tabpanel"
-             aria-labelledby="ver-asignacion-tab">
+        <div class="tab-pane fade" id="ver-asignacion" role="tabpanel">
 
             <h4 class="fw-bold text-success mb-4">
                 Asignacion de Reportes
@@ -209,10 +319,7 @@
                                 </button>
 
                                 <!-- MODAL REASIGNAR -->
-                                <div class="modal fade"
-                                     id="modalReasignar{{ $asignacion->id_assignment }}"
-                                     tabindex="-1"
-                                     aria-hidden="true">
+                                <div class="modal fade" id="modalReasignar{{ $asignacion->id_assignment }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content border-0 shadow-lg rounded-4">
 
@@ -226,9 +333,7 @@
                                                 </div>
 
                                                 <div class="modal-body p-4">
-                                                    <div class="text-center mb-3" style="font-size: 48px;">
-                                                        🔄
-                                                    </div>
+                                                    <div class="text-center mb-3" style="font-size: 48px;">🔄</div>
 
                                                     <p class="text-muted text-center">
                                                         Selecciona la nueva autoridad que atendera este reporte.
@@ -323,34 +428,26 @@
     </div>
 
     @if(session('success') || $errors->any())
-        <div class="modal fade" id="respuestaAsignacionModal" tabindex="-1" aria-labelledby="respuestaAsignacionModalLabel" aria-hidden="true">
+        <div class="modal fade" id="respuestaAsignacionModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow-lg rounded-4">
 
                     <div class="modal-header {{ session('success') ? 'bg-success' : 'bg-danger' }} text-white rounded-top-4">
-                        <h5 class="modal-title" id="respuestaAsignacionModalLabel">
+                        <h5 class="modal-title">
                             {{ session('success') ? 'Proceso realizado' : 'Datos incorrectos' }}
                         </h5>
 
-                        <button type="button"
-                                class="btn-close btn-close-white"
-                                data-bs-dismiss="modal"
-                                aria-label="Cerrar">
-                        </button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
 
                     <div class="modal-body text-center p-4">
-
                         <div class="mb-3" style="font-size: 48px;">
                             {{ session('success') ? '✅' : '⚠️' }}
                         </div>
 
                         @if(session('success'))
                             <h5 class="fw-bold mb-2">Operacion exitosa</h5>
-
-                            <p class="text-muted mb-0">
-                                {{ session('success') }}
-                            </p>
+                            <p class="text-muted mb-0">{{ session('success') }}</p>
                         @endif
 
                         @if($errors->any())
@@ -362,7 +459,6 @@
                                 @endforeach
                             </ul>
                         @endif
-
                     </div>
 
                     <div class="modal-footer justify-content-center border-0 pb-4">

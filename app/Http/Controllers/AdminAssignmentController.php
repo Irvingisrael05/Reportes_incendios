@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\DB;
 class AdminAssignmentController extends Controller
 {
     /**
-     * Muestra la vista de asignación de reportes.
+     * Muestra la vista de asignacion de reportes.
      */
     public function index()
     {
-        // 1. Reportes recibidos sin asignar (status = 'Recibido' y sin asignación)
+        // 1. Reportes recibidos sin asignar
         $reportes = ReportModel::whereHas('status', function ($query) {
             $query->where('description', 'Recibido');
         })
@@ -42,7 +42,7 @@ class AdminAssignmentController extends Controller
                 $weather = $report->weather;
 
                 $climatografia = sprintf(
-                    '%s°C / %s%% / %s kmh',
+                    '%s°C / %s%% / %s km/h',
                     $weather->temperature ?? 'Sin dato',
                     $weather->humidity ?? 'Sin dato',
                     $weather->wind_speed ?? 'Sin dato'
@@ -54,22 +54,41 @@ class AdminAssignmentController extends Controller
 
                     'report_date' => $report->report_date,
 
-                    // NUEVOS CAMPOS
+                    // Ubicacion
                     'latitude' => $report->latitude,
                     'longitude' => $report->longitude,
+
                     'municipality' => $report->municipality,
                     'locality' => $report->locality,
 
-                    // Compatibilidad anterior
                     'location' => $report->latitude . ', ' . $report->longitude,
 
+                    // Ecosistema
                     'ecosystem' => $report->ecosystem->description ?? 'N/A',
 
+                    // Categoria
                     'category' => $category,
 
+                    // Descripcion
                     'description' => $report->description,
 
+                    // Climatografia resumida
                     'climatografia' => $climatografia,
+
+                    // Datos climaticos detallados
+                    'weather_temperature' => $weather->temperature ?? null,
+
+                    'weather_humidity' => $weather->humidity ?? null,
+
+                    'weather_precipitation' => $weather->precipitation ?? null,
+
+                    'weather_wind_speed' => $weather->wind_speed ?? null,
+
+                    'weather_wind_direction' => $weather->wind_direction ?? null,
+
+                    'weather_atmospheric_pressure' => $weather->atmospheric_pressure ?? null,
+
+                    'weather_cloudiness' => $weather->cloudiness ?? null,
                 ];
             })
             ->sortByDesc('report_date')
