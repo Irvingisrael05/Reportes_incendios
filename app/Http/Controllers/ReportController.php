@@ -15,8 +15,8 @@ class ReportController extends Controller
 {
     public function create()
     {
-        $ecosystems = EcosystemModel::all();
-        $categories = CategoryModel::all();
+        $ecosystems = EcosystemModel::orderBy('id_ecosystem', 'asc')->get();
+        $categories = CategoryModel::orderBy('id_category', 'asc')->get();
 
         return view('usuarios.generar_reportes', compact('ecosystems', 'categories'));
     }
