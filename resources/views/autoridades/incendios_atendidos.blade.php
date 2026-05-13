@@ -15,7 +15,7 @@
                 <th>Fecha de Atencion</th>
                 <th>Ubicacion</th>
                 <th>Municipio / Localidad</th>
-                <th>Ecosistema</th>
+                <th>Vegetacion</th>
                 <th>Categoria</th>
                 <th>Estado</th>
                 <th>Detalle</th>
@@ -97,7 +97,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <strong>Ecosistema:</strong>
+                                        <strong>Vegetación:</strong>
                                         <p>{{ $report->ecosystem }}</p>
                                     </div>
 

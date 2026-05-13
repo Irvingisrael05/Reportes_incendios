@@ -61,6 +61,7 @@ class ReportController extends Controller
         $report = ReportModel::create([
             'user_id' => Auth::user()->id_user,
             'ecosystem_id' => $request->ecosystem_id,
+            'category_id' => $request->category_id,
             'weather_id' => $weather->id_weather,
             'status_id' => 1,
             'latitude' => $lat,
@@ -88,7 +89,7 @@ class ReportController extends Controller
     public function misReportes()
     {
         $reports = ReportModel::where('user_id', Auth::user()->id_user)
-            ->with(['ecosystem', 'status'])
+            ->with(['ecosystem', 'status', 'category'])
             ->orderBy('report_date', 'desc')
             ->get();
 

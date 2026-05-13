@@ -14,7 +14,7 @@
                 <th>Fecha de Reporte</th>
                 <th>Ubicacion</th>
                 <th>Municipio / Localidad</th>
-                <th>Ecosistema</th>
+                <th>Vegetación</th>
                 <th>Categoria</th>
                 <th>Descripcion</th>
                 <th>Estado</th>
@@ -88,7 +88,7 @@
                                 <li><strong>Localidad:</strong> {{ $report->locality ?? 'No disponible' }}</li>
                                 <li><strong>Latitud:</strong> {{ $report->latitude }}</li>
                                 <li><strong>Longitud:</strong> {{ $report->longitude }}</li>
-                                <li><strong>Ecosistema:</strong> {{ $report->ecosystem }}</li>
+                                <li><strong>Vegetación:</strong> {{ $report->ecosystem }}</li>
                                 <li><strong>Categoria:</strong> {{ $report->category }}</li>
                                 <li><strong>Descripcion:</strong> {{ $report->description }}</li>
                                 <li><strong>Estado:</strong> {{ $report->status }}</li>

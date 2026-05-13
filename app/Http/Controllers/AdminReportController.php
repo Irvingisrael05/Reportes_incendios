@@ -14,8 +14,7 @@ class AdminReportController extends Controller
             ->join('report_status as rs', 'r.status_id', '=', 'rs.id_status')
             ->join('users as u', 'r.user_id', '=', 'u.id_user')
             ->join('persons as p', 'u.person_id', '=', 'p.id_person')
-            ->leftJoin('evidences as ev', 'r.id_report', '=', 'ev.report_id')
-            ->leftJoin('categories as c', 'ev.category_id', '=', 'c.id_category')
+            ->leftJoin('categories as c', 'r.category_id', '=', 'c.id_category')
             ->select(
                 'r.id_report',
                 'r.report_date',
@@ -23,24 +22,9 @@ class AdminReportController extends Controller
                 'r.municipality',
                 'r.locality',
                 'e.description as ecosystem',
-                DB::raw("COALESCE(MIN(c.description), 'Sin categoria') as category"),
+                DB::raw("COALESCE(c.description, 'Sin categoria') as category"),
                 'r.description',
                 'rs.description as estado_real',
-                'u.username',
-                'p.first_name',
-                'p.last_name',
-                'p.middle_name'
-            )
-            ->groupBy(
-                'r.id_report',
-                'r.report_date',
-                'r.latitude',
-                'r.longitude',
-                'r.municipality',
-                'r.locality',
-                'e.description',
-                'r.description',
-                'rs.description',
                 'u.username',
                 'p.first_name',
                 'p.last_name',

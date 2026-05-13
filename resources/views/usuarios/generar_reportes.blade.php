@@ -88,13 +88,13 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">
-                            Tipo de Ecosistema
+                            Tipo de Vegetación
                         </label>
 
                         <select class="form-select"
                                 name="ecosystem_id"
                                 required>
-                            <option value="">Seleccione ecosistema</option>
+                            <option value="">Seleccione tipo de vegetación</option>
 
                             @foreach($ecosystems as $eco)
                                 <option value="{{ $eco->id_ecosystem }}">

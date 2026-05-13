@@ -80,7 +80,7 @@
                     <th>Usuario</th>
                     <th>Ubicacion</th>
                     <th>Municipio / Localidad</th>
-                    <th>Ecosistema</th>
+                    <th>Vegetación</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
                     <th>Estado</th>
@@ -243,7 +243,7 @@
                     <th>Usuario</th>
                     <th>Ubicacion</th>
                     <th>Municipio / Localidad</th>
-                    <th>Ecosistema</th>
+                    <th>Vegetación</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
                     <th>Estado</th>
@@ -300,7 +300,7 @@
                     <th>Usuario</th>
                     <th>Ubicacion</th>
                     <th>Municipio / Localidad</th>
-                    <th>Ecosistema</th>
+                    <th>Vegetación</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
                     <th>Estado</th>
@@ -357,7 +357,7 @@
                     <th>Usuario</th>
                     <th>Ubicacion</th>
                     <th>Municipio / Localidad</th>
-                    <th>Ecosistema</th>
+                    <th>Vegetación</th>
                     <th>Categoria</th>
                     <th>Descripcion</th>
                     <th>Estado</th>

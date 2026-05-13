@@ -46,7 +46,7 @@
                         <th>Fecha</th>
                         <th>Ubicacion</th>
                         <th>Municipio / Localidad</th>
-                        <th>Ecosistema</th>
+                        <th>Vegetación</th>
                         <th>Categoria</th>
                         <th>Descripcion</th>
                         <th>Climatografia</th>
