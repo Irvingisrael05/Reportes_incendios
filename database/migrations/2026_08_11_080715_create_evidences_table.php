@@ -9,18 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('evidences', function (Blueprint $table) {
-            $table->integer('id_evidence')->primary();
+            $table->increments('id_evidence');
 
-            $table->integer('report_id');
-            $table->integer('user_id');
-            $table->integer('category_id');
+            $table->unsignedInteger('report_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('category_id');
 
             $table->string('url', 255)->nullable();
-            $table->timestamp('evidence_date')->useCurrent()->nullable();
+            $table->timestamp('evidence_date')->useCurrent();
 
             $table->foreign('report_id')
                 ->references('id_report')
-                ->on('reports');
+                ->on('reports')
+                ->onDelete('cascade');
 
             $table->foreign('user_id')
                 ->references('id_user')

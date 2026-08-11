@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Auditable;
+//use App\Models\Traits\Auditable;
 
 class PersonModel extends Model
 {
-    use Auditable;
+  //  use Auditable;
 
     protected $table = 'persons';
 

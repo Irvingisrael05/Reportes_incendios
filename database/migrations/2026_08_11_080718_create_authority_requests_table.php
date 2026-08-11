@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('authority_requests', function (Blueprint $table) {
-            $table->integer('id_request')->primary();
+            $table->increments('id_request');
 
-            $table->integer('user_id');
+            $table->unsignedInteger('user_id');
 
             $table->string('company_name', 150);
             $table->string('company_key', 100);
@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->string('status', 20)->default('pending');
 
-            $table->timestamp('request_date')->useCurrent()->nullable();
+            $table->timestamp('request_date')->useCurrent();
             $table->timestamp('response_date')->nullable();
 
             $table->foreign('user_id')

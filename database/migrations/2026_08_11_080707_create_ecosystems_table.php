@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ecosystems', function (Blueprint $table) {
-            $table->integer('id_ecosystem')->primary();
+            $table->increments('id_ecosystem');
             $table->string('description', 150)->unique();
         });
     }

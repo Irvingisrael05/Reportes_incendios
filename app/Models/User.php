@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Traits\Auditable;
+//use App\Models\Traits\Auditable;
 class User extends Authenticatable
 {
-    use Auditable;
-    
+    //use Auditable;
+
     use Notifiable;
 
     protected $table = 'users';

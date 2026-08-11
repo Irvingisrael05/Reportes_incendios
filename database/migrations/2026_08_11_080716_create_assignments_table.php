@@ -9,17 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('assignments', function (Blueprint $table) {
-            $table->integer('id_assignment')->primary();
+            $table->increments('id_assignment');
 
-            $table->integer('report_id');
-            $table->integer('authority_id');
+            $table->unsignedInteger('report_id');
+            $table->unsignedInteger('authority_id');
 
-            $table->timestamp('assignment_date')->useCurrent()->nullable();
+            $table->timestamp('assignment_date')->useCurrent();
             $table->timestamp('attended_date')->nullable();
 
             $table->foreign('report_id')
                 ->references('id_report')
-                ->on('reports');
+                ->on('reports')
+                ->onDelete('cascade');
 
             $table->foreign('authority_id')
                 ->references('id_user')

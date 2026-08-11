@@ -9,24 +9,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->integer('id_user')->primary();
+            $table->increments('id_user');
 
-            $table->integer('person_id');
+            $table->unsignedInteger('person_id');
             $table->string('username', 50)->unique();
             $table->string('password', 255);
             $table->string('status', 20)->default('active');
-            $table->integer('role_id');
+            $table->unsignedInteger('role_id');
 
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('person_id')
                 ->references('id_person')
-                ->on('persons');
+                ->on('persons')
+                ->onDelete('cascade');
 
             $table->foreign('role_id')
                 ->references('id_role')
-                ->on('roles');
+                ->on('roles')
+                ->onDelete('restrict');
         });
     }
 

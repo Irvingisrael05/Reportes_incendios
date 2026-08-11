@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Auditable;
+//use App\Models\Traits\Auditable;
 
 class CategoryModel extends Model
 {
-    use Auditable;
+   // use Auditable;
     use HasFactory;
 
     protected $table = 'categories'; // nombre de la tabla

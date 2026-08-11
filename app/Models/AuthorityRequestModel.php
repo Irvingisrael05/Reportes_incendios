@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Auditable;
+//use App\Models\Traits\Auditable;
 
 class AuthorityRequestModel extends Model
 {
-    use Auditable;
+   // use Auditable;
 
     protected $table = 'authority_requests';
 

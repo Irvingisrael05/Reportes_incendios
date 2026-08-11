@@ -9,15 +9,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('weather_conditions', function (Blueprint $table) {
-            $table->integer('id_weather')->primary();
-            $table->decimal('temperature')->nullable();
-            $table->decimal('humidity')->nullable();
-            $table->decimal('precipitation')->nullable();
-            $table->decimal('wind_speed')->nullable();
+            $table->increments('id_weather');
+
+            $table->decimal('temperature', 8, 2)->nullable();
+            $table->decimal('humidity', 8, 2)->nullable();
+            $table->decimal('precipitation', 8, 2)->nullable();
+            $table->decimal('wind_speed', 8, 2)->nullable();
             $table->string('wind_direction', 50)->nullable();
-            $table->decimal('atmospheric_pressure')->nullable();
-            $table->decimal('cloudiness')->nullable();
-            $table->timestamp('record_date')->useCurrent()->nullable();
+            $table->decimal('atmospheric_pressure', 10, 2)->nullable();
+            $table->decimal('cloudiness', 8, 2)->nullable();
+
+            $table->timestamp('record_date')->useCurrent();
         });
     }
 

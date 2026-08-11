@@ -15,20 +15,25 @@ return new class extends Migration
             $table->string('operation', 10);
             $table->text('record_id');
 
-            $table->jsonb('old_data')->nullable();
-            $table->jsonb('new_data')->nullable();
+            $table->json('old_data')->nullable();
+            $table->json('new_data')->nullable();
 
-            $table->integer('changed_by_user_id')->nullable();
+            $table->unsignedInteger('changed_by_user_id')->nullable();
 
             $table->string('changed_by_type', 20)
-                ->default('postgres');
+                ->default('mysql');
 
             $table->ipAddress('source_ip')->nullable();
             $table->text('user_agent')->nullable();
 
-            $table->timestampTz('created_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
 
             $table->text('db_user')->nullable();
+
+            $table->foreign('changed_by_user_id')
+                ->references('id_user')
+                ->on('users')
+                ->nullOnDelete();
         });
     }
 

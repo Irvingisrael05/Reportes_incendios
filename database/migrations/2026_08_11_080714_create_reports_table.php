@@ -9,23 +9,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->integer('id_report')->primary();
+            $table->increments('id_report');
 
-            $table->integer('user_id');
-            $table->integer('ecosystem_id');
-            $table->integer('weather_id');
-            $table->integer('status_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('ecosystem_id');
+            $table->unsignedInteger('weather_id');
+            $table->unsignedInteger('status_id');
+            $table->unsignedInteger('category_id')->nullable();
 
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
 
-            $table->timestamp('report_date')->useCurrent()->nullable();
+            $table->timestamp('report_date')->useCurrent();
             $table->text('description');
 
             $table->string('municipality', 100)->default('Unknown');
             $table->string('locality', 150)->default('Unknown');
-
-            $table->integer('category_id')->nullable();
 
             $table->foreign('user_id')
                 ->references('id_user')
@@ -45,7 +44,8 @@ return new class extends Migration
 
             $table->foreign('category_id')
                 ->references('id_category')
-                ->on('categories');
+                ->on('categories')
+                ->nullOnDelete();
         });
     }
 
