@@ -41,8 +41,9 @@
                                     type="text"
                                     name="first_name"
                                     class="form-control shadow-sm"
-                                    pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$"
-                                    title="Debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Juan"
+                                    value="{{ old('first_name') }}"
+                                    pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?$"
+                                    title="Ingresa uno o dos nombres; cada uno inicia con mayuscula y se separan con un solo espacio. Ejemplo: Jesus o Jesus Aurelio"
                                     required>
                             </div>
 
@@ -52,6 +53,7 @@
                                     type="text"
                                     name="last_name"
                                     class="form-control shadow-sm"
+                                    value="{{ old('last_name') }}"
                                     pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$"
                                     title="Debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Garcia"
                                     required>
@@ -63,18 +65,19 @@
                                     type="text"
                                     name="middle_name"
                                     class="form-control shadow-sm"
+                                    value="{{ old('middle_name') }}"
                                     pattern="^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$"
                                     title="Debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Lopez">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Correo Electronico</label>
-                                <input type="email" name="email" class="form-control shadow-sm" required>
+                                <input type="email" name="email" class="form-control shadow-sm" value="{{ old('email') }}" required>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Telefono</label>
-                                <input type="text" name="phone" class="form-control shadow-sm">
+                                <input type="text" name="phone" class="form-control shadow-sm" value="{{ old('phone') }}">
                             </div>
 
                         </div>
@@ -84,7 +87,15 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Nombre de Usuario</label>
-                                <input type="text" name="username" class="form-control shadow-sm" required>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    class="form-control shadow-sm"
+                                    value="{{ old('username') }}"
+                                    pattern="^\S+$"
+                                    title="El nombre de usuario no puede contener espacios. Quita los espacios e intentalo de nuevo."
+                                    autocomplete="username"
+                                    required>
                             </div>
                         </div>
 

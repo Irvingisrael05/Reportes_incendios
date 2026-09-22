@@ -17,15 +17,15 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => ['required', 'regex:/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$/u'],
+            'first_name' => ['required', 'regex:/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?$/u'],
             'last_name' => ['required', 'regex:/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$/u'],
             'middle_name' => ['nullable', 'regex:/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$/u'],
             'email' => 'required|email|unique:persons',
-            'username' => 'required|unique:users',
+            'username' => ['required', 'regex:/^\S+$/u', 'unique:users'],
             'password' => 'required|confirmed'
         ], [
             'first_name.required' => 'El nombre es obligatorio.',
-            'first_name.regex' => 'El nombre debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Juan.',
+            'first_name.regex' => 'El nombre debe contener uno o dos nombres; cada uno debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Jesus o Jesus Aurelio.',
 
             'last_name.required' => 'El apellido paterno es obligatorio.',
             'last_name.regex' => 'El apellido paterno debe iniciar con mayuscula y continuar con minusculas. Ejemplo: Garcia.',
@@ -37,6 +37,7 @@ class RegisterController extends Controller
             'email.unique' => 'Este correo electronico ya esta registrado.',
 
             'username.required' => 'El nombre de usuario es obligatorio.',
+            'username.regex' => 'El nombre de usuario no puede contener espacios. Quita los espacios e intentalo de nuevo.',
             'username.unique' => 'Este nombre de usuario ya esta registrado.',
 
             'password.required' => 'La contrasena es obligatoria.',
